@@ -6,19 +6,23 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Swal from 'sweetalert2';
 import { useMutation } from '@apollo/client';
-import { DELETE_PRODUCT, ALL_PRODUCTS } from '@/graphql/products';
 import Link from 'next/link';
+import { ALL_CATEGORIES, DELETE_CATEGORIE } from '@/graphql/categories';
+import Edit from './EditCategorie';
 
-export default function BodyTable({ product }) {
-  const { id, nombre, precio, existencia, categoria, marca } = product;
-  const [eliminarProducto] = useMutation(DELETE_PRODUCT, {
+export default function BodyTable({ categorie }) {
+  const { id, nombre } = categorie;
+  const [open, setOpen] = React.useState(false);
+  const [eliminarCategoria] = useMutation(DELETE_CATEGORIE, {
     update(cache) {
-      const { allProducts } = cache.readQuery({ query: ALL_PRODUCTS });
+      const { obtenerCategorias } = cache.readQuery({ query: ALL_CATEGORIES });
 
       cache.writeQuery({
-        query: ALL_PRODUCTS,
+        query: ALL_CATEGORIES,
         data: {
-          allProducts: allProducts.filter((current) => current.id !== id),
+          obtenerCategorias: obtenerCategorias.filter(
+            (current) => current.id !== id
+          ),
         },
       });
     },
@@ -26,7 +30,7 @@ export default function BodyTable({ product }) {
 
   function handleDelete() {
     Swal.fire({
-      title: 'Deseas eliminar este producto?',
+      title: 'Deseas eliminar esta categoria?',
       text: 'Esta acción no se puede deshacer',
       icon: 'warning',
       showCancelButton: true,
@@ -37,8 +41,8 @@ export default function BodyTable({ product }) {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await eliminarProducto({ variables: { id } });
-          Swal.fire('Correct', 'Se elimino el producto', 'success');
+          await eliminarCategoria({ variables: { id } });
+          Swal.fire('Correcto', 'Categoria eliminada', 'success');
         } catch (error) {
           const errorMessage = error.message.replace('Graphql error: ', '');
           Swal.fire('Error', errorMessage, 'error');
@@ -46,24 +50,27 @@ export default function BodyTable({ product }) {
       }
     });
   }
+
+  function handleOpen() {
+    setOpen(true);
+  }
+  function handleClose() {
+    setOpen(false);
+  }
   return (
     <StyledTableRow>
       <StyledTableCell>{nombre}</StyledTableCell>
-      <StyledTableCell align="center">{existencia} Piezas</StyledTableCell>
-      <StyledTableCell align="center">$ {precio}</StyledTableCell>
-      <StyledTableCell align="center"> {categoria.nombre}</StyledTableCell>
-      <StyledTableCell align="center"> {marca}</StyledTableCell>
       <StyledTableCell align="center">
         <Button variant="contained" color="secondary" onClick={handleDelete}>
           <DeleteIcon />
         </Button>
       </StyledTableCell>
       <StyledTableCell align="center">
-        <Link href="/editproduct/[id]" as={`/editproduct/${id}`}>
-          <Button variant="contained" color="primary">
-            <EditIcon />
-          </Button>
-        </Link>
+        <Button variant="contained" color="primary" onClick={handleOpen}>
+          <EditIcon />
+        </Button>
+
+        <Edit id={id} open={open} handleClose={handleClose} />
       </StyledTableCell>
     </StyledTableRow>
   );

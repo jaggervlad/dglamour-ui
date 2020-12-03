@@ -6,19 +6,21 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Swal from 'sweetalert2';
 import { useMutation } from '@apollo/client';
-import { DELETE_PRODUCT, ALL_PRODUCTS } from '@/graphql/products';
 import Link from 'next/link';
+import { ALL_CLIENTS, DELETE_CLIENT } from '@/graphql/clients';
 
-export default function BodyTable({ product }) {
-  const { id, nombre, precio, existencia, categoria, marca } = product;
-  const [eliminarProducto] = useMutation(DELETE_PRODUCT, {
+export default function BodyTable({ client }) {
+  const { id, cedula, nombre, mail, telefono } = client;
+  const [eliminarProducto] = useMutation(DELETE_CLIENT, {
     update(cache) {
-      const { allProducts } = cache.readQuery({ query: ALL_PRODUCTS });
+      const { obtenerClientes } = cache.readQuery({ query: ALL_CLIENTS });
 
       cache.writeQuery({
-        query: ALL_PRODUCTS,
+        query: ALL_CLIENTS,
         data: {
-          allProducts: allProducts.filter((current) => current.id !== id),
+          obtenerClientes: obtenerClientes.filter(
+            (current) => current.id !== id
+          ),
         },
       });
     },
@@ -26,7 +28,7 @@ export default function BodyTable({ product }) {
 
   function handleDelete() {
     Swal.fire({
-      title: 'Deseas eliminar este producto?',
+      title: 'Deseas eliminar este cliente?',
       text: 'Esta acción no se puede deshacer',
       icon: 'warning',
       showCancelButton: true,
@@ -38,7 +40,7 @@ export default function BodyTable({ product }) {
       if (result.isConfirmed) {
         try {
           await eliminarProducto({ variables: { id } });
-          Swal.fire('Correct', 'Se elimino el producto', 'success');
+          Swal.fire('Correct', 'Cliente eliminado', 'success');
         } catch (error) {
           const errorMessage = error.message.replace('Graphql error: ', '');
           Swal.fire('Error', errorMessage, 'error');
@@ -49,17 +51,16 @@ export default function BodyTable({ product }) {
   return (
     <StyledTableRow>
       <StyledTableCell>{nombre}</StyledTableCell>
-      <StyledTableCell align="center">{existencia} Piezas</StyledTableCell>
-      <StyledTableCell align="center">$ {precio}</StyledTableCell>
-      <StyledTableCell align="center"> {categoria.nombre}</StyledTableCell>
-      <StyledTableCell align="center"> {marca}</StyledTableCell>
+      <StyledTableCell align="center">{cedula} </StyledTableCell>
+      <StyledTableCell align="center">0{telefono}</StyledTableCell>
+      <StyledTableCell align="center"> {mail}</StyledTableCell>
       <StyledTableCell align="center">
         <Button variant="contained" color="secondary" onClick={handleDelete}>
           <DeleteIcon />
         </Button>
       </StyledTableCell>
       <StyledTableCell align="center">
-        <Link href="/editproduct/[id]" as={`/editproduct/${id}`}>
+        <Link href="/editclient/[id]" as={`/editclient/${id}`}>
           <Button variant="contained" color="primary">
             <EditIcon />
           </Button>

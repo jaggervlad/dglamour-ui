@@ -24,3 +24,36 @@ export const LOGOUT = gql`
     logout
   }
 `;
+
+export const NEW_USER = gql`
+  mutation nuevoUsuario($input: UsuarioInput) {
+    nuevoUsuario(input: $input) {
+      id
+      nombre
+      username
+      rol
+    }
+  }
+`;
+
+export const GET_USER = gql`
+  query obtenerUsuario {
+    obtenerUsuario {
+      id
+      nombre
+      username
+      rol
+    }
+  }
+`;
+
+export const ALL_USERS = gql`
+  query obtenerUsuarios {
+    obtenerUsuarios {
+      id
+      nombre
+      username
+      rol
+    }
+  }
+`;

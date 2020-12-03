@@ -9,6 +9,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import PersonIcon from '@material-ui/icons/Person';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import CategoryIcon from '@material-ui/icons/Category';
 import { useRouter } from 'next/router';
 
 export function MaintListItems() {
@@ -22,7 +23,7 @@ export function MaintListItems() {
         <ListItemText primary="Pedidos" />
       </ListItem>
 
-      <ListItem button onClick={() => router.push('/customers')}>
+      <ListItem button onClick={() => router.push('/clients')}>
         <ListItemIcon>
           <PeopleIcon />
         </ListItemIcon>
@@ -49,47 +50,16 @@ export function MaintListItems() {
         </ListItemIcon>
         <ListItemText primary="Perfil" />
       </ListItem>
+
+      <ListItem button onClick={() => router.push('/categories')}>
+        <ListItemIcon>
+          <CategoryIcon />
+        </ListItemIcon>
+        <ListItemText primary="Categorias" />
+      </ListItem>
     </div>
   );
 }
-
-// export const MainListItems = () => {
-//   return (
-//     <div>
-//       <ListItem button>
-//         <ListItemIcon>
-//           <ShoppingCartIcon />
-//         </ListItemIcon>
-//         <ListItemText primary="Pedidos" />
-//       </ListItem>
-
-//       <ListItem button>
-//         <ListItemIcon>
-//           <PeopleIcon />
-//         </ListItemIcon>
-//         <ListItemText primary="Clientes" />
-//       </ListItem>
-//       <ListItem button>
-//         <ListItemIcon>
-//           <CardTravelIcon />
-//         </ListItemIcon>
-//         <ListItemText primary="Productos" />
-//       </ListItem>
-//       <ListItem button>
-//         <ListItemIcon>
-//           <BarChartIcon />
-//         </ListItemIcon>
-//         <ListItemText primary="Reportes" />
-//       </ListItem>
-//       <ListItem button>
-//         <ListItemIcon>
-//           <PersonIcon />
-//         </ListItemIcon>
-//         <ListItemText primary="Perfil" />
-//       </ListItem>
-//     </div>
-//   );
-// };
 
 export const secondaryListItems = (
   <div>
