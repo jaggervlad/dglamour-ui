@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
 import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { useForm, FormProvider } from 'react-hook-form';
-import { CREATE_USER } from '../../graphql/auth';
+import { NEW_USER } from '../../graphql/auth';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SignupSchema } from '../../validationSchemas/auth';
 import FormInput from '../forms/FormInput';
@@ -22,7 +22,7 @@ import ErrorInput from '../forms/ErrorInput';
 import { useStyles } from '../../styles/makeStyles/login';
 
 export default function SignUp() {
-  const [createUser] = useMutation(CREATE_USER);
+  const [createUser] = useMutation(NEW_USER);
   const router = useRouter();
   const methods = useForm({
     resolver: yupResolver(SignupSchema),

@@ -6,6 +6,7 @@ import {
   StyledAutoSelectInputLabel,
   stylesReactSelect,
 } from '@/styles/makeStyles/multiSelect';
+import { FormHelperText } from '@material-ui/core';
 
 function Option(props) {
   const { onMouseMove, onMouseOver, ...newInnerProps } = props.innerProps;
@@ -22,7 +23,22 @@ const components = {
 };
 
 function ReactSelect(props) {
-  const { label, options, name } = props;
+  const {
+    label,
+    newOptions,
+    name,
+    innerRef,
+    value,
+    onChange,
+    errorobj,
+  } = props;
+  let isError = false;
+  let errorMessage = '';
+  if (errorobj && errorobj.hasOwnProperty(name)) {
+    isError = true;
+    errorMessage = errorobj[name].message;
+  }
+
   return (
     <>
       <StyledFormControl>
@@ -30,30 +46,38 @@ function ReactSelect(props) {
           <span>{label}</span>
         </StyledAutoSelectInputLabel>
         <Select
-          isMulti={true}
-          options={options}
+          {...props}
           getOptionValue={(opc) => opc.id}
           getOptionLabel={(opc) => `${opc.label}`}
           noOptionsMessage={() => 'No hay resultados'}
           placeholder="Porfavor Selecciona"
           components={components}
           isClearable={true}
-          // styles={stylesReactSelect}
-          {...props}
+          isSearchable={true}
+          styles={stylesReactSelect}
+          ref={innerRef}
+          value={value}
+          onChange={onChange}
+          options={newOptions}
+          key="id"
+          isMulti={true}
         />
+        {isError && (
+          <FormHelperText error={isError}>{errorMessage}</FormHelperText>
+        )}
       </StyledFormControl>
     </>
   );
 }
 
-export default function FormAutoSelectComplete(props) {
+export default function FormSelectAutoComplete(props) {
   const { control } = useFormContext();
   const { name, label, options } = props;
   const [newData, setNewData] = useState([]);
 
   useEffect(() => {
-    const newOptions = options.map((data, index) => ({
-      label: data.label,
+    const newOptions = options.map((data) => ({
+      label: data.nombre,
       value: data.id,
     }));
     setNewData(newOptions);
@@ -62,13 +86,23 @@ export default function FormAutoSelectComplete(props) {
   return (
     <>
       <Controller
-        as={ReactSelect}
+        render={({ ref, value, onChange }) => {
+          return (
+            <ReactSelect
+              innerRef={ref}
+              value={value}
+              onChange={onChange}
+              newOptions={newData}
+              label={label}
+              name={name}
+              {...props}
+            />
+          );
+        }}
         name={name}
         control={control}
-        label={label}
         defaultValue={[]}
-        {...props}
-        options={newData}
+        rules={{ required: true }}
       />
     </>
   );

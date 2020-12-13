@@ -56,7 +56,6 @@ export default function FormSelect(props) {
               label={label}
               options={options}
               value={props.value}
-              inputRef={props.ref}
               onChange={props.onChange}
             />
           );

@@ -10,6 +10,7 @@ import Dashboard from './Dashboard';
 import { Copyright } from '../customs/Copyright';
 import { useStyles } from '../../styles/makeStyles/login';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { useRouter } from 'next/router';
 
 export function NotSignIn() {
   const classes = useStyles();
@@ -41,7 +42,7 @@ export default function AuthLayout({ children }) {
   const me = data?.obtenerUsuario;
 
   if (loading) return <CircularProgress />;
-  if (error) <p>{error.message}</p>;
+  if (error) return <NotSignIn />;
 
   if (me !== undefined) {
     return <Dashboard user={me}>{children}</Dashboard>;

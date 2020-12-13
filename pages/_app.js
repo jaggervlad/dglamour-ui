@@ -7,6 +7,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { theme } from '../styles/theme';
 
 import '@/styles/multiSelect.css';
+import { OrderProvider } from 'contexts/OrderProvider';
 
 export default function MyApp({ Component, pageProps }) {
   const client = useApollo(pageProps);
@@ -29,10 +30,12 @@ export default function MyApp({ Component, pageProps }) {
       </Head>
 
       <ApolloProvider client={client}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Component {...pageProps} />
-        </ThemeProvider>
+        <OrderProvider>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </OrderProvider>
       </ApolloProvider>
     </>
   );
