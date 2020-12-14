@@ -4,7 +4,7 @@ import EditProduct from '@/components/productos/EditProduct';
 
 export default function edit() {
   const router = useRouter();
-  const id = router.query.id;
+  const { id } = router.query;
 
   return <EditProduct id={id} />;
 }
