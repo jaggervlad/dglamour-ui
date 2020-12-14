@@ -5,15 +5,15 @@ import { Title } from '../customs/Title';
 import Button from '@material-ui/core/Button';
 import { useRouter } from 'next/router';
 import AddIcon from '@material-ui/icons/Add';
-import CustomTable from './CustomTable';
 import Search from '../customs/Search';
 import { useQuery } from '@apollo/client';
 import { ALL_PRODUCTS } from '@/graphql/products';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
+import ChartUser from './ChartUser';
+import { Paper } from '@material-ui/core';
 
-export default function ListProducts() {
-  const { data, loading, error } = useQuery(ALL_PRODUCTS);
+export default function RecordUser() {
   const router = useRouter();
 
   const [search, setSearch] = useState('');
@@ -26,7 +26,7 @@ export default function ListProducts() {
   return (
     <AuthLayout>
       <Grid item container xs={12} md={8} lg={12}>
-        <Title>Productos</Title>
+        <Title>Record de Ventas 'Vendedores'</Title>
 
         <Grid
           item
@@ -55,9 +55,11 @@ export default function ListProducts() {
           </Grid>
         </Grid>
 
-        {loading && <CircularProgress />}
-        {error && <Alert severity="error">error.message</Alert>}
-        {data && <CustomTable rows={data.allProducts} search={search} />}
+        <Grid item xs={12} style={{ marginTop: '25px' }}>
+          <Paper style={{ height: 'auto' }}>
+            <ChartUser />
+          </Paper>
+        </Grid>
       </Grid>
     </AuthLayout>
   );

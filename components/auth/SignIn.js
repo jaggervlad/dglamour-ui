@@ -80,13 +80,6 @@ export default function SignIn() {
             </Button>
           </form>
         </FormProvider>
-        <Grid container justify="center">
-          <Grid item>
-            <Link href="/signup" variant="body2">
-              {"Don't have an account? Sign Up"}
-            </Link>
-          </Grid>
-        </Grid>
       </div>
 
       <Box mt={8}>

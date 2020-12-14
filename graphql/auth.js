@@ -26,8 +26,8 @@ export const LOGOUT = gql`
 `;
 
 export const NEW_USER = gql`
-  mutation nuevoUsuario($input: UsuarioInput) {
-    nuevoUsuario(input: $input) {
+  mutation nuevoUsuario($id: ID, $input: UsuarioInput) {
+    nuevoUsuario(id: $id, input: $input) {
       id
       nombre
       username
@@ -39,6 +39,17 @@ export const NEW_USER = gql`
 export const GET_USER = gql`
   query obtenerUsuario {
     obtenerUsuario {
+      id
+      nombre
+      username
+      rol
+    }
+  }
+`;
+
+export const USER = gql`
+  query usuario($id: ID!) {
+    usuario(id: $id) {
       id
       nombre
       username

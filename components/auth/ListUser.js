@@ -8,12 +8,12 @@ import AddIcon from '@material-ui/icons/Add';
 import CustomTable from './CustomTable';
 import Search from '../customs/Search';
 import { useQuery } from '@apollo/client';
-import { ALL_PRODUCTS } from '@/graphql/products';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
+import { ALL_USERS } from '@/graphql/auth';
 
-export default function ListProducts() {
-  const { data, loading, error } = useQuery(ALL_PRODUCTS);
+export default function ListUser() {
+  const { data, loading, error } = useQuery(ALL_USERS);
   const router = useRouter();
 
   const [search, setSearch] = useState('');
@@ -26,7 +26,7 @@ export default function ListProducts() {
   return (
     <AuthLayout>
       <Grid item container xs={12} md={8} lg={12}>
-        <Title>Productos</Title>
+        <Title>Usuarios</Title>
 
         <Grid
           item
@@ -40,7 +40,7 @@ export default function ListProducts() {
               variant="contained"
               color="primary"
               style={{ marginRight: '5px' }}
-              onClick={() => router.push('/newproduct')}
+              onClick={() => router.push('/signup')}
             >
               <AddIcon />
             </Button>
@@ -57,7 +57,7 @@ export default function ListProducts() {
 
         {loading && <CircularProgress />}
         {error && <Alert severity="error">error.message</Alert>}
-        {data && <CustomTable rows={data.allProducts} search={search} />}
+        {data && <CustomTable rows={data.obtenerUsuarios} search={search} />}
       </Grid>
     </AuthLayout>
   );

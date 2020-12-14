@@ -36,7 +36,7 @@ export default function EditForm(props) {
       });
 
       router.push('/clients');
-      Swal.fire('Creado', 'Producto editado correctamente', 'success');
+      Swal.fire('Actualizado', 'Cliente editado correctamente', 'success');
     } catch (error) {
       const errorMsg = error.message.replace('Graphql error:', '');
       Swal.fire('Error', errorMsg, 'error');
@@ -87,7 +87,7 @@ export default function EditForm(props) {
           className={classes.submit}
           onClick={handleSubmit(onSubmit)}
         >
-          editar
+          guardar cambios
         </Button>
       </form>
     </FormProvider>

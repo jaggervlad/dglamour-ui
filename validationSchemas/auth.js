@@ -1,13 +1,13 @@
 import * as yup from 'yup';
 
+const REQUIRED = 'Este campo es obligatorio';
+
 export const SignupSchema = yup.object().shape({
-  email: yup.string().email().required('This input is required'),
-  password: yup.string().min(6).max(20).required('This input is required'),
-  passwordConfirm: yup
-    .string()
-    .min(6)
-    .max(20)
-    .required('This input is required'),
+  nombre: yup.string().required(REQUIRED),
+  username: yup.string().required(REQUIRED),
+  rol: yup.string().required(REQUIRED),
+  password: yup.string().min(6).max(20).required(REQUIRED),
+  passwordConfirm: yup.string().min(6).max(20).required(REQUIRED),
 });
 
 export const SigninSchema = yup.object().shape({

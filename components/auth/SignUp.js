@@ -2,27 +2,42 @@ import React from 'react';
 
 // Components
 import Button from '@material-ui/core/Button';
-import Link from '../customs/Links';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import { Copyright } from '../customs/Copyright';
 import Swal from 'sweetalert2';
 
 // Fetch a Mutate data
 import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { useForm, FormProvider } from 'react-hook-form';
-import { NEW_USER } from '../../graphql/auth';
+import { ALL_USERS, NEW_USER } from '../../graphql/auth';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SignupSchema } from '../../validationSchemas/auth';
 import FormInput from '../forms/FormInput';
-import ErrorInput from '../forms/ErrorInput';
 import { useStyles } from '../../styles/makeStyles/login';
+import AuthLayout from '../layout/AuthLayout';
+import { ArrowBack } from '@material-ui/icons';
+import { Title } from '../customs/Title';
+import FormSelect from '../forms/FormSelect';
+
+let rolOpts = [
+  { id: 'ADMINISTRADOR', label: 'ADMINISTRADOR' },
+  { id: 'USUARIO', label: 'USUARIO' },
+];
 
 export default function SignUp() {
-  const [createUser] = useMutation(NEW_USER);
+  const [nuevoUsuario] = useMutation(NEW_USER, {
+    update(cache, { data: nuevoUsuario }) {
+      const { obtenerUsuarios } = cache.readQuery({ query: ALL_USERS });
+
+      cache.writeQuery({
+        query: ALL_USERS,
+        data: {
+          obtenerUsuarios: [...obtenerUsuarios, nuevoUsuario],
+        },
+      });
+    },
+  });
   const router = useRouter();
   const methods = useForm({
     resolver: yupResolver(SignupSchema),
@@ -32,7 +47,7 @@ export default function SignUp() {
   const classes = useStyles();
 
   async function onSubmit(data) {
-    const { email, password, passwordConfirm } = data;
+    const { username, password, passwordConfirm, nombre, rol } = data;
     console.log(data);
 
     if (password !== passwordConfirm) {
@@ -40,16 +55,18 @@ export default function SignUp() {
     }
 
     try {
-      await createUser({
+      await nuevoUsuario({
         variables: {
-          data: {
-            email,
+          input: {
+            nombre,
+            username,
             password,
+            rol,
           },
         },
       });
 
-      router.push('/signin');
+      router.push('/users');
     } catch (error) {
       const errorMsg = error.message.replace('Graphql error: ', '');
       Swal.fire('Error', errorMsg, 'error');
@@ -57,53 +74,94 @@ export default function SignUp() {
   }
 
   return (
-    <Container component="main" maxWidth="xs">
-      <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
-          Sign Up
-        </Typography>
-
-        <FormProvider {...methods}>
-          <form className={classes.form}>
-            <FormInput name="email" label="Email" type="email" />
-            <ErrorInput errors={errors} name={'email'} />
-
-            <FormInput name="password" label="Password" type="password" />
-            <ErrorInput errors={errors} name={'password'} />
-
-            <FormInput
-              name="passwordConfirm"
-              label="Confirm Password"
-              type="password"
-            />
-            <ErrorInput errors={errors} name={'passwordConfirm'} />
-
+    <AuthLayout>
+      <Grid item container xs={12} md={8} lg={12}>
+        <Grid
+          item
+          container
+          spacing={4}
+          alignItems="center"
+          justify="space-between"
+        >
+          <Grid item>
             <Button
-              disabled={isSubmitting}
-              onClick={handleSubmit(onSubmit)}
-              type="submit"
-              fullWidth
               variant="contained"
               color="primary"
-              className={classes.submit}
+              style={{ marginRight: '5px' }}
+              onClick={() => router.push('/users')}
             >
-              register
+              <ArrowBack />
             </Button>
-          </form>
-        </FormProvider>
-
-        <Grid container justify="center">
-          <Grid item>
-            <Link href="/signin" variant="body2">
-              Already have an account? Sign in
-            </Link>
           </Grid>
         </Grid>
-      </div>
 
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-    </Container>
+        <Container component="main" maxWidth="xs">
+          <div>
+            <Title>Nuevo Usuario</Title>
+
+            <FormProvider {...methods}>
+              <form className={classes.form}>
+                <Grid container spacing={1}>
+                  <Grid item xs={12}>
+                    <FormInput
+                      name="nombre"
+                      label="Nombre Completo"
+                      errorobj={errors}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <FormInput
+                      name="username"
+                      label="Nombre de Usuario"
+                      errorobj={errors}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <FormSelect
+                      name="rol"
+                      label="Rol"
+                      options={rolOpts}
+                      errorobj={errors}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <FormInput
+                      type="password"
+                      name="password"
+                      label="Contraseña"
+                      errorobj={errors}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <FormInput
+                      type="password"
+                      name="passwordConfirm"
+                      label="Confirmar Contraseña"
+                      errorobj={errors}
+                    />
+                  </Grid>
+                </Grid>
+
+                <Button
+                  disabled={isSubmitting}
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                  onClick={handleSubmit(onSubmit)}
+                >
+                  crear
+                </Button>
+              </form>
+            </FormProvider>
+          </div>
+        </Container>
+      </Grid>
+    </AuthLayout>
   );
 }

@@ -12,15 +12,15 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { GET_CLIENT } from '@/graphql/clients';
 import { useQuery } from '@apollo/client';
+import { USER } from '@/graphql/auth';
 
-export default function EditClient(props) {
+export default function EditUser(props) {
   const { id } = props;
   const router = useRouter();
   const classes = useFormStyles();
 
-  const { data, loading, error } = useQuery(GET_CLIENT, { variables: { id } });
+  const { data, loading, error } = useQuery(USER, { variables: { id } });
 
   return (
     <AuthLayout>
@@ -37,7 +37,7 @@ export default function EditClient(props) {
               variant="contained"
               color="primary"
               style={{ marginRight: '5px' }}
-              onClick={() => router.push('/clients')}
+              onClick={() => router.push('/users')}
             >
               <ArrowBackIcon />
             </Button>
@@ -46,12 +46,10 @@ export default function EditClient(props) {
 
         <Container component="main" maxWidth="xs">
           <div className={classes.paper}>
-            <Title>Editar Cliente</Title>
+            <Title>Editar Usuario</Title>
             {loading && <CircularProgress />}
             {error && <Alert severity="error">{error.message}</Alert>}
-            {data?.obtenerCliente && (
-              <EditForm client={data.obtenerCliente} id={id} />
-            )}
+            {data && <EditForm user={data.usuario} id={id} />}
           </div>
         </Container>
       </Grid>

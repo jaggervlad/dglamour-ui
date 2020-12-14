@@ -16,6 +16,13 @@ export function MaintListItems() {
   const router = useRouter();
   return (
     <div>
+      <ListItem button onClick={() => router.push('/profile')}>
+        <ListItemIcon>
+          <PersonIcon />
+        </ListItemIcon>
+        <ListItemText primary="Perfil" />
+      </ListItem>
+
       <ListItem button onClick={() => router.push('/orders')}>
         <ListItemIcon>
           <ShoppingCartIcon />
@@ -37,50 +44,63 @@ export function MaintListItems() {
         <ListItemText primary="Productos" />
       </ListItem>
 
-      <ListItem button onClick={() => router.push('/reports')}>
-        <ListItemIcon>
-          <BarChartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Reportes" />
-      </ListItem>
-
-      <ListItem button onClick={() => router.push('/Profile')}>
-        <ListItemIcon>
-          <PersonIcon />
-        </ListItemIcon>
-        <ListItemText primary="Perfil" />
-      </ListItem>
-
       <ListItem button onClick={() => router.push('/categories')}>
         <ListItemIcon>
           <CategoryIcon />
         </ListItemIcon>
         <ListItemText primary="Categorias" />
       </ListItem>
+
+      <ListItem button onClick={() => router.push('/reports')}>
+        <ListItemIcon>
+          <BarChartIcon />
+        </ListItemIcon>
+        <ListItemText primary="Reportes" />
+      </ListItem>
     </div>
   );
 }
 
-export const secondaryListItems = (
-  <div>
-    <ListSubheader inset>Saved reports</ListSubheader>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Current month" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Last quarter" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
-    </ListItem>
-  </div>
-);
+export const SecondaryListItems = () => {
+  const router = useRouter();
+  return (
+    <div>
+      <ListSubheader inset>Opciones Avanzadas</ListSubheader>
+
+      <ListItem button>
+        <ListItemIcon>
+          <AssignmentIcon />
+        </ListItemIcon>
+        <ListItemText primary="Mes Actual" />
+      </ListItem>
+
+      <ListItem button>
+        <ListItemIcon>
+          <AssignmentIcon />
+        </ListItemIcon>
+        <ListItemText primary="Ultima quincena" />
+      </ListItem>
+
+      <ListItem button onClick={() => router.push('/recordusers')}>
+        <ListItemIcon>
+          <AssignmentIcon />
+        </ListItemIcon>
+        <ListItemText primary="Vendedores" />
+      </ListItem>
+
+      <ListItem button onClick={() => router.push('/recordclients')}>
+        <ListItemIcon>
+          <AssignmentIcon />
+        </ListItemIcon>
+        <ListItemText primary="Clientes" />
+      </ListItem>
+
+      <ListItem button onClick={() => router.push('/users')}>
+        <ListItemIcon>
+          <AssignmentIcon />
+        </ListItemIcon>
+        <ListItemText primary="Lista de usuarios" />
+      </ListItem>
+    </div>
+  );
+};
