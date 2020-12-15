@@ -1,7 +1,5 @@
+import SignIn from '@/components/auth/SignIn';
+
 export default function Home() {
-  return (
-    <>
-      <p>Hellow Motherfucker</p>
-    </>
-  );
+  return <SignIn />;
 }
