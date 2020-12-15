@@ -45,7 +45,7 @@ export default function SignIn() {
 
       const { token } = data.autenticarUsuario;
       localStorage.setItem('token', token);
-      await router.push('/products');
+      await router.push('/profile');
     } catch (error) {
       const errorMsg = error.message.replace('Graphql error: ', '');
       Swal.fire('Error', errorMsg, 'error');
