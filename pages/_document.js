@@ -2,7 +2,7 @@ import React from 'react';
 import Document, { Head, Main, NextScript, Html } from 'next/document';
 import { ServerStyleSheets } from '@material-ui/core';
 import { theme } from '../styles/theme';
-
+import logo from '../public/logo.jpg';
 export default class MyDocument extends Document {
   render() {
     return (
@@ -17,6 +17,7 @@ export default class MyDocument extends Document {
             rel="stylesheet"
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
           />
+          <link rel="icon" type="image/x-icon" href={logo} />
         </Head>
         <body>
           <Main />

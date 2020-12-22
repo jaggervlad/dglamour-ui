@@ -2,27 +2,27 @@ import { Grid, TextField, Typography } from '@material-ui/core';
 import { useOrder } from 'contexts/OrderProvider';
 import React, { useState, useEffect } from 'react';
 
-export default function AddShippingCost() {
-  const [costEnv, setCostEnv] = useState(0);
-  const { addShippingCost, updateTotal } = useOrder();
+export default function AddDiscount() {
+  const [discount, setDiscount] = useState(0);
+  const { addDiscount, updateTotal } = useOrder();
 
   useEffect(() => {
-    addShippingCost(Number(costEnv));
+    addDiscount(Number(discount));
     updateTotal();
-  }, [costEnv]);
+  }, [discount]);
 
   function handleChange(param) {
-    setCostEnv(param);
+    setDiscount(param);
   }
 
   return (
     <Grid item xs={6}>
-      <Typography variant="h6">Añadir Costo Envio</Typography>
+      <Typography variant="h6">Descuento</Typography>
 
       <TextField
         type="number"
-        value={costEnv}
-        label="Envio"
+        value={discount}
+        label="Descuento"
         onChange={(e) => handleChange(e.target.value)}
         variant="outlined"
         margin="normal"

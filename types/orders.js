@@ -1,6 +1,7 @@
 export const SELECT_CLIENT = 'SELECT_CLIENT';
 export const SELECT_PRODUCT = 'SELECT_PRODUCT';
 export const ADD_COST_SHIPPING = 'ADD_COST_SHIPPING';
+export const ADD_DISCOUNT = 'ADD_DISCOUNT';
 export const COUNT_PRODUCTS = 'COUNT_PRODUCTS';
 export const UPDATE_TOTAL = 'UPDATE_TOTAL';
 export const RESET = 'RESET';

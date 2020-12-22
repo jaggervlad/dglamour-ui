@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import AuthLayout from '../layout/AuthLayout';
+import AuthLayout, { NotSignIn } from '../layout/AuthLayout';
 import { Title } from '../customs/Title';
 import Button from '@material-ui/core/Button';
 import { useQuery } from '@apollo/client';
