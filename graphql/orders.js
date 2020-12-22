@@ -101,6 +101,7 @@ export const GET_ORDER = gql`
       pago
       descripcion
       costEnv
+      descuento
     }
   }
 `;

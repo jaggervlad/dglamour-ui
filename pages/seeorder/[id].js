@@ -46,9 +46,12 @@ export default function seeorder() {
     total,
     vendedor,
     costEnv,
+    descuento,
   } = data.obtenerPedido;
   const { mail, nombre, telefono } = cliente;
   const { nombre: vendedorNombre } = vendedor;
+
+  console.log(vendedor);
 
   return (
     <AuthLayout>
@@ -72,10 +75,12 @@ export default function seeorder() {
                 justify="space-around"
               >
                 <Grid item xs={12} md={6}>
-                  <Box display="flex" alignItems="center" m={3}>
-                    <PermIdentityIcon style={{ marginRight: '15px' }} />
-                    <Typography variant="body1">{nombre}</Typography>
-                  </Box>
+                  {nombre && (
+                    <Box display="flex" alignItems="center" m={3}>
+                      <PermIdentityIcon style={{ marginRight: '15px' }} />
+                      <Typography variant="body1">{nombre}</Typography>
+                    </Box>
+                  )}
 
                   <Box display="flex" alignItems="center" m={3}>
                     <MailOutlineIcon style={{ marginRight: '15px' }} />
@@ -128,6 +133,12 @@ export default function seeorder() {
                   {costEnv && (
                     <Typography variant="body1">
                       Costo de Envio <span>$ {costEnv}</span>
+                    </Typography>
+                  )}
+
+                  {descuento && (
+                    <Typography variant="body1">
+                      Descuento <span>$ {descuento}</span>
                     </Typography>
                   )}
 

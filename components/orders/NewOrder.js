@@ -20,6 +20,7 @@ import Total from './Total';
 import { OrderSchema } from 'validationSchemas/order';
 import { useOrder } from 'contexts/OrderProvider';
 import { ALL_ORDERS, NEW_ORDER } from '@/graphql/orders';
+import AddDiscount from './AddDiscount';
 
 export default function NewOrder() {
   const router = useRouter();
@@ -37,7 +38,7 @@ export default function NewOrder() {
     },
   });
 
-  const { client, products, total, cost } = useOrder();
+  const { client, products, total, cost, discount } = useOrder();
   const methods = useForm({
     resolver: yupResolver(OrderSchema),
   });
@@ -66,6 +67,7 @@ export default function NewOrder() {
       total,
       direccion: data.direccion,
       costEnv: cost,
+      descuento: discount,
     };
 
     try {
@@ -122,6 +124,7 @@ export default function NewOrder() {
                   <AddProducts />
                   <SummaryOrder />
                   <AddShippingCost />
+                  <AddDiscount />
                   <Total />
 
                   <Grid item xs={12}>

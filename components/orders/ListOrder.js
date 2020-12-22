@@ -11,6 +11,7 @@ import { useQuery } from '@apollo/client';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
 import { ALL_ORDERS } from '@/graphql/orders';
+import { LocalShipping, MonetizationOn } from '@material-ui/icons';
 
 export default function ListOrder() {
   const { data, loading, error } = useQuery(ALL_ORDERS);
@@ -49,18 +50,18 @@ export default function ListOrder() {
               variant="contained"
               color="primary"
               style={{ marginRight: '5px' }}
-              onClick={() => router.push('/ordersdispatched')}
+              onClick={() => router.push('/orderspaid')}
             >
-              Pedidos Despachados
+              <MonetizationOn />
             </Button>
 
             <Button
               variant="contained"
               color="primary"
               style={{ marginRight: '5px' }}
-              onClick={() => router.push('/orderspaid')}
+              onClick={() => router.push('/ordersdispatched')}
             >
-              Pedidos Pagados
+              <LocalShipping />
             </Button>
           </Grid>
 
