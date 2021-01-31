@@ -28,9 +28,6 @@ const MuiSelect = (props) => {
         {label}
       </InputLabel>
       <Select id={name} {...props}>
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
         {options?.map((item) => (
           <MenuItem key={item.id} value={item.id}>
             {item.label}

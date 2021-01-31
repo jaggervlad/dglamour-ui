@@ -20,6 +20,6 @@ export const useFormStyles = makeStyles((theme) => ({
   },
 
   formControl: {
-    margin: theme.spacing(1),
+    marginBottom: theme.spacing(1),
   },
 }));

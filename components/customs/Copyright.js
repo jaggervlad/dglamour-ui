@@ -5,9 +5,13 @@ import MuiLink from '@material-ui/core/Link';
 export function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <MuiLink color="inherit" href="https://material-ui.com/">
-        Your Website
+      {'MKT ©'}
+      <MuiLink
+        color="inherit"
+        href="https://seacal.com/"
+        style={{ marginRight: '5px' }}
+      >
+        Seacal
       </MuiLink>
       {new Date().getFullYear()}
     </Typography>

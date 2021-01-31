@@ -1,106 +1,48 @@
 import React from 'react';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import CardTravelIcon from '@material-ui/icons/CardTravel';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import PersonIcon from '@material-ui/icons/Person';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import CategoryIcon from '@material-ui/icons/Category';
-import { useRouter } from 'next/router';
+import StorageIcon from '@material-ui/icons/Storage';
+import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
+import SecurityIcon from '@material-ui/icons/Security';
+import AssessmentIcon from '@material-ui/icons/Assessment';
+
+import ListCollpase from '../controls/ListCollapse';
+import ListItemsDataCenter from './ListItemsDataCenter';
+import ListItemsProcess from './ListItemsProcess';
+import ListItemsSecurity from './ListItemsSecurity';
+import ListItemsResults from './ListItemsResults';
 
 export function MaintListItems() {
-  const router = useRouter();
   return (
     <div>
-      <ListItem button onClick={() => router.push('/profile')}>
-        <ListItemIcon>
-          <PersonIcon />
-        </ListItemIcon>
-        <ListItemText primary="Perfil" />
-      </ListItem>
+      <ListCollpase
+        title="CENTRO DATOS"
+        render={<StorageIcon color="primary" />}
+      >
+        <ListItemsDataCenter />
+      </ListCollpase>
 
-      <ListItem button onClick={() => router.push('/orders')}>
-        <ListItemIcon>
-          <ShoppingCartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Pedidos" />
-      </ListItem>
+      <ListCollpase
+        title="PROCESOS"
+        render={<AccountBalanceWalletIcon color="primary" />}
+        initialState={false}
+      >
+        <ListItemsProcess />
+      </ListCollpase>
 
-      <ListItem button onClick={() => router.push('/clients')}>
-        <ListItemIcon>
-          <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary="Clientes" />
-      </ListItem>
+      <ListCollpase
+        title="RESULTADOS"
+        render={<AssessmentIcon color="primary" />}
+        initialState={false}
+      >
+        <ListItemsResults />
+      </ListCollpase>
 
-      <ListItem button onClick={() => router.push('/products')}>
-        <ListItemIcon>
-          <CardTravelIcon />
-        </ListItemIcon>
-        <ListItemText primary="Productos" />
-      </ListItem>
-
-      <ListItem button onClick={() => router.push('/categories')}>
-        <ListItemIcon>
-          <CategoryIcon />
-        </ListItemIcon>
-        <ListItemText primary="Categorias" />
-      </ListItem>
-
-      <ListItem button onClick={() => router.push('/reports')}>
-        <ListItemIcon>
-          <BarChartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Reportes" />
-      </ListItem>
+      <ListCollpase
+        title="SEGURIDAD"
+        render={<SecurityIcon color="primary" />}
+        initialState={false}
+      >
+        <ListItemsSecurity />
+      </ListCollpase>
     </div>
   );
 }
-
-export const SecondaryListItems = () => {
-  const router = useRouter();
-  return (
-    <div>
-      <ListSubheader inset>Opciones Avanzadas</ListSubheader>
-
-      <ListItem button>
-        <ListItemIcon>
-          <AssignmentIcon />
-        </ListItemIcon>
-        <ListItemText primary="Mes Actual" />
-      </ListItem>
-
-      <ListItem button>
-        <ListItemIcon>
-          <AssignmentIcon />
-        </ListItemIcon>
-        <ListItemText primary="Ultima quincena" />
-      </ListItem>
-
-      <ListItem button onClick={() => router.push('/recordusers')}>
-        <ListItemIcon>
-          <AssignmentIcon />
-        </ListItemIcon>
-        <ListItemText primary="Vendedores" />
-      </ListItem>
-
-      <ListItem button onClick={() => router.push('/recordclients')}>
-        <ListItemIcon>
-          <AssignmentIcon />
-        </ListItemIcon>
-        <ListItemText primary="Clientes" />
-      </ListItem>
-
-      <ListItem button onClick={() => router.push('/users')}>
-        <ListItemIcon>
-          <AssignmentIcon />
-        </ListItemIcon>
-        <ListItemText primary="Lista de usuarios" />
-      </ListItem>
-    </div>
-  );
-};

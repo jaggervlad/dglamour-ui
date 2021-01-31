@@ -1,18 +1,12 @@
 import React from 'react';
-import { StyledTableCell } from '../table/StyledTableCell';
-import { StyledTableRow } from '../table/StyledTableRow';
-import Button from '@material-ui/core/Button';
+import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import Swal from 'sweetalert2';
 import { useMutation } from '@apollo/client';
-import Link from 'next/link';
-import { ALL_CATEGORIES, DELETE_CATEGORIE } from '@/graphql/categories';
-import Edit from './EditCategorie';
+import Swal from 'sweetalert2';
 
-export default function BodyTable({ categorie }) {
-  const { id, nombre } = categorie;
-  const [open, setOpen] = React.useState(false);
+import { ALL_CATEGORIES, DELETE_CATEGORIE } from '@/graphql/categories';
+
+export default function CategorieDeleteButton({ id, children, ...props }) {
   const [eliminarCategoria] = useMutation(DELETE_CATEGORIE, {
     update(cache) {
       const { obtenerCategorias } = cache.readQuery({ query: ALL_CATEGORIES });
@@ -50,28 +44,14 @@ export default function BodyTable({ categorie }) {
       }
     });
   }
-
-  function handleOpen() {
-    setOpen(true);
-  }
-  function handleClose() {
-    setOpen(false);
-  }
   return (
-    <StyledTableRow>
-      <StyledTableCell>{nombre}</StyledTableCell>
-      <StyledTableCell align="center">
-        <Button variant="contained" color="secondary" onClick={handleDelete}>
-          <DeleteIcon />
-        </Button>
-      </StyledTableCell>
-      <StyledTableCell align="center">
-        <Button variant="contained" color="primary" onClick={handleOpen}>
-          <EditIcon />
-        </Button>
-
-        <Edit id={id} open={open} handleClose={handleClose} />
-      </StyledTableCell>
-    </StyledTableRow>
+    <Button
+      variant="contained"
+      color="secondary"
+      onClick={handleDelete}
+      {...props}
+    >
+      <DeleteIcon />
+    </Button>
   );
 }

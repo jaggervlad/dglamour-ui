@@ -14,11 +14,7 @@ import { Copyright } from '../customs/Copyright';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import {
-  MaintListItems,
-  SecondaryListItems,
-  secondaryListItems,
-} from './ListItems';
+import { MaintListItems } from './ListItems';
 import { useStyles } from '../../styles/makeStyles/dashboard';
 import { useRouter } from 'next/router';
 import { NotSignIn } from './AuthLayout';
@@ -86,11 +82,6 @@ export default function Dashboard({ children, user }) {
           <MaintListItems />
         </List>
         <Divider />
-        {user.rol === 'ADMINISTRADOR' && (
-          <List>
-            <SecondaryListItems />
-          </List>
-        )}
       </Drawer>
 
       {/* Main Content  */}

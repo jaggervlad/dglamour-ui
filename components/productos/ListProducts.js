@@ -1,27 +1,36 @@
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
-import AuthLayout from '../layout/AuthLayout';
-import { Title } from '../customs/Title';
-import Button from '@material-ui/core/Button';
-import { useRouter } from 'next/router';
-import AddIcon from '@material-ui/icons/Add';
-import CustomTable from './CustomTable';
-import Search from '../customs/Search';
-import { useQuery } from '@apollo/client';
-import { ALL_PRODUCTS } from '@/graphql/products';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
+import { useQuery } from '@apollo/client';
+
+import AuthLayout from '../layout/AuthLayout';
+import Search from '../customs/Search';
+import ProductAddButton from './ProductAddButton';
+import ProductTable from './ProductTable';
+import { Title } from '../customs/Title';
+import { ALL_PRODUCTS } from '@/graphql/products';
 
 export default function ListProducts() {
   const { data, loading, error } = useQuery(ALL_PRODUCTS);
-  const router = useRouter();
+  const [filterFn, setFilterFn] = useState({
+    fn: (items) => {
+      return items;
+    },
+  });
 
-  const [search, setSearch] = useState('');
-  const searchRef = useRef();
-
-  const handleSearch = useCallback(() => {
-    setSearch(searchRef.current.value);
-  }, []);
+  const handleSearch = (e) => {
+    let target = e.target;
+    setFilterFn({
+      fn: (items) => {
+        if (target.value == '') return items;
+        else
+          return items.filter((x) =>
+            x.nombre.toLowerCase().includes(target.value)
+          );
+      },
+    });
+  };
 
   return (
     <AuthLayout>
@@ -36,28 +45,19 @@ export default function ListProducts() {
           justify="space-between"
         >
           <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ marginRight: '5px' }}
-              onClick={() => router.push('/newproduct')}
-            >
-              <AddIcon />
-            </Button>
+            <ProductAddButton />
           </Grid>
 
           <Grid item>
-            <Search
-              search={search}
-              handleSearch={handleSearch}
-              searchRef={searchRef}
-            />
+            <Search handleSearch={handleSearch} />
           </Grid>
         </Grid>
 
         {loading && <CircularProgress />}
         {error && <Alert severity="error">error.message</Alert>}
-        {data && <CustomTable rows={data.allProducts} search={search} />}
+        {data && (
+          <ProductTable products={data.allProducts} filterFn={filterFn} />
+        )}
       </Grid>
     </AuthLayout>
   );

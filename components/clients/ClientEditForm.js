@@ -1,21 +1,16 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import { useFormStyles } from '../../styles/makeStyles/forms';
-import FormInput from '../forms/FormInput';
+import Swal from 'sweetalert2';
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { UPDATE_CLIENT } from '@/graphql/clients';
-import { useMutation } from '@apollo/client';
-import Swal from 'sweetalert2';
-import { useRouter } from 'next/router';
-import { ClientSchema } from 'validationSchemas/clients';
 
-export default function EditForm(props) {
-  const classes = useFormStyles();
-  const router = useRouter();
-  const { id, client } = props;
-  const [actualizarCliente] = useMutation(UPDATE_CLIENT);
+import FormInput from '../forms/FormInput';
+import { ClientSchema } from 'validationSchemas/clients';
+import { Form } from '../forms/Form';
+import Controls from '../controls/Controls';
+
+export default function ClientEditForm(props) {
+  const { id, client, setOpen, updateClient } = props;
   const preload = {
     ...client,
   };
@@ -31,13 +26,14 @@ export default function EditForm(props) {
     const input = { telefono: parseInt(data.telefono), ...data };
 
     try {
-      await actualizarCliente({
+      await updateClient({
         variables: { id, input },
       });
 
-      router.push('/clients');
+      setOpen(false);
       Swal.fire('Actualizado', 'Cliente editado correctamente', 'success');
     } catch (error) {
+      setOpen(false);
       const errorMsg = error.message.replace('Graphql error:', '');
       Swal.fire('Error', errorMsg, 'error');
     }
@@ -45,7 +41,7 @@ export default function EditForm(props) {
 
   return (
     <FormProvider {...methods}>
-      <form className={classes.form}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <FormInput
@@ -56,7 +52,7 @@ export default function EditForm(props) {
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <FormInput name="cedula" label="Nº Cedula" errorobj={errors} />
+            <FormInput name="cedula" label="Nº Cédula" errorobj={errors} />
           </Grid>
           <Grid item xs={12} sm={6}>
             <FormInput name="telefono" label="Nº Telefono" errorobj={errors} />
@@ -78,18 +74,12 @@ export default function EditForm(props) {
           </Grid>
         </Grid>
 
-        <Button
+        <Controls.Button
           disabled={isSubmitting}
+          text="guardar cambios"
           type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-          onClick={handleSubmit(onSubmit)}
-        >
-          guardar cambios
-        </Button>
-      </form>
+        />
+      </Form>
     </FormProvider>
   );
 }

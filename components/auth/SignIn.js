@@ -56,15 +56,15 @@ export default function SignIn() {
     <Container component="main" maxWidth="xs">
       <div className={`${classes.paper} ${classes.marginTop}`}>
         <Typography component="h1" variant="h5">
-          Sign in
+          Inicia Sesión
         </Typography>
 
         <FormProvider {...methods}>
           <form className={classes.form}>
-            <FormInput name="username" label="Username" />
+            <FormInput name="username" label="Usuario" />
             <ErrorInput errors={errors} name={'username'} />
 
-            <FormInput name="password" label="Password" type="password" />
+            <FormInput name="password" label="Contraseña" type="password" />
             <ErrorInput errors={errors} name={'password'} />
 
             <Button
@@ -76,7 +76,7 @@ export default function SignIn() {
               className={classes.submit}
               onClick={handleSubmit(onSubmit)}
             >
-              login
+              ingresar
             </Button>
           </form>
         </FormProvider>

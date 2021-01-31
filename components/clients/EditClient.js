@@ -1,60 +1,32 @@
 import React from 'react';
-import { useRouter } from 'next/router';
-
-import { Title } from '../customs/Title';
-import { useFormStyles } from '@/styles/makeStyles/forms';
-import EditForm from './EditForm';
-
-import Grid from '@material-ui/core/Grid';
-import AuthLayout from '../layout/AuthLayout';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
+import ClientEditForm from './ClientEditForm';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
-import { GET_CLIENT } from '@/graphql/clients';
-import { useQuery } from '@apollo/client';
+import { GET_CLIENT, UPDATE_CLIENT } from '@/graphql/clients';
+import { useMutation, useQuery } from '@apollo/client';
+import Popup from '../customs/Popup';
 
 export default function EditClient(props) {
-  const { id } = props;
-  const router = useRouter();
-  const classes = useFormStyles();
-
+  const { id, open, setOpen } = props;
+  const [actualizarCliente] = useMutation(UPDATE_CLIENT);
   const { data, loading, error } = useQuery(GET_CLIENT, { variables: { id } });
-
+  if (loading) return null;
+  if (error) return <Alert severity="error">{error.message}</Alert>;
   return (
-    <AuthLayout>
-      <Grid item container xs={12} md={8} lg={12}>
-        <Grid
-          item
-          container
-          spacing={4}
-          alignItems="center"
-          justify="space-between"
+    <>
+      {data.obtenerCliente && (
+        <Popup
+          title="Actualizar Cliente"
+          openPopup={open}
+          setOpenPopup={setOpen}
         >
-          <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ marginRight: '5px' }}
-              onClick={() => router.push('/clients')}
-            >
-              <ArrowBackIcon />
-            </Button>
-          </Grid>
-        </Grid>
-
-        <Container component="main" maxWidth="xs">
-          <div className={classes.paper}>
-            <Title>Editar Cliente</Title>
-            {loading && <CircularProgress />}
-            {error && <Alert severity="error">{error.message}</Alert>}
-            {data?.obtenerCliente && (
-              <EditForm client={data.obtenerCliente} id={id} />
-            )}
-          </div>
-        </Container>
-      </Grid>
-    </AuthLayout>
+          <ClientEditForm
+            setOpen={setOpen}
+            id={id}
+            updateClient={actualizarCliente}
+            client={data.obtenerCliente}
+          />
+        </Popup>
+      )}
+    </>
   );
 }
