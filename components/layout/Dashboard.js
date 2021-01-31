@@ -13,11 +13,11 @@ import Grid from '@material-ui/core/Grid';
 import { Copyright } from '../customs/Copyright';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { MaintListItems } from './ListItems';
 import { useStyles } from '../../styles/makeStyles/dashboard';
 import { useRouter } from 'next/router';
 import { NotSignIn } from './AuthLayout';
+import LogoutButton from '../customs/LogoutButton';
 
 export default function Dashboard({ children, user }) {
   const router = useRouter();
@@ -58,11 +58,10 @@ export default function Dashboard({ children, user }) {
             noWrap
             className={classes.title}
           >
-            Welcome to the App - @{user?.username}
+            Bienvenido 😊 - @{user?.username}
           </Typography>
-          <IconButton color="inherit" onClick={() => router.push('/signout')}>
-            <ExitToAppIcon />
-          </IconButton>
+
+          <LogoutButton />
         </Toolbar>
       </AppBar>
       <Drawer

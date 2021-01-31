@@ -3,6 +3,7 @@ import { setContext } from '@apollo/client/link/context';
 import merge from 'deepmerge';
 import { useMemo } from 'react';
 import fetch from 'isomorphic-unfetch';
+import { getAccessToken } from '@/utils/accessToken';
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
 let apolloClient;
@@ -14,7 +15,7 @@ const httpLink = new HttpLink({
 });
 
 const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem('token');
+  const token = getAccessToken();
 
   return {
     headers: {
@@ -27,7 +28,6 @@ const authLink = setContext((_, { headers }) => {
 function createApolloClient() {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
-    connectToDevTools: true,
     link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
   });
