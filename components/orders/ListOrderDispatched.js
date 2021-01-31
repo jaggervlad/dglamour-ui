@@ -1,30 +1,42 @@
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
-import AuthLayout from '../layout/AuthLayout';
-import { Title } from '../customs/Title';
-import Button from '@material-ui/core/Button';
-import { useRouter } from 'next/router';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import Search from '../customs/Search';
 import { useQuery } from '@apollo/client';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import Alert from '@material-ui/lab/Alert';
+
+import AuthLayout from '../layout/AuthLayout';
+import { Title } from '../customs/Title';
+import Search from '../customs/Search';
 import { ORDERS_DISPATCHED } from '@/graphql/orders';
-import CustomTableDispatched from './CustomTableDispatched';
-import { MonetizationOn } from '@material-ui/icons';
+import OrderDispatchTable from './OrderDispatchTable';
+import ButtonIcon from '../controls/ButtonIcon';
 
 export default function ListOrderDispatched() {
   const { data, loading, error } = useQuery(ORDERS_DISPATCHED);
-  const router = useRouter();
+  const [filterFn, setFilterFn] = useState({
+    fn: (items) => {
+      return items;
+    },
+  });
 
-  console.log(data);
+  const handleSearch = (e) => {
+    let target = e.target;
+    setFilterFn({
+      fn: (items) => {
+        if (target.value == '') return items;
+        else
+          return items.filter(
+            (x) =>
+              x.cliente?.nombre?.toLowerCase().includes(target.value) ||
+              x.id.toLowerCase().includes(target.value)
+          );
+      },
+    });
+  };
 
-  const [search, setSearch] = useState('');
-  const searchRef = useRef();
-
-  const handleSearch = useCallback(() => {
-    setSearch(searchRef.current.value);
-  }, []);
+  console.log(data?.pedidosDespachados);
 
   return (
     <AuthLayout>
@@ -39,40 +51,26 @@ export default function ListOrderDispatched() {
           justify="space-between"
         >
           <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ marginRight: '5px' }}
-              onClick={() => router.push('/orders')}
-            >
+            <ButtonIcon redirect="orders">
               <ArrowBackIcon />
-            </Button>
+            </ButtonIcon>
 
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ marginRight: '5px' }}
-              onClick={() => router.push('/orderspaid')}
-            >
-              <MonetizationOn />
-            </Button>
+            <ButtonIcon redirect="orderspaid">
+              <MonetizationOnIcon />
+            </ButtonIcon>
           </Grid>
 
           <Grid item>
-            <Search
-              search={search}
-              handleSearch={handleSearch}
-              searchRef={searchRef}
-            />
+            <Search handleSearch={handleSearch} />
           </Grid>
         </Grid>
 
         {loading && <CircularProgress />}
         {error && <Alert severity="error">{error.message}</Alert>}
         {data && (
-          <CustomTableDispatched
-            rows={data.pedidosDespachados}
-            search={search}
+          <OrderDispatchTable
+            orders={data.pedidosDespachados}
+            filterFn={filterFn}
           />
         )}
       </Grid>

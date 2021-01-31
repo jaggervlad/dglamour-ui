@@ -4,12 +4,11 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
 
 export default function Search(props) {
-  const { search, handleSearch, searchRef } = props;
+  const { handleSearch } = props;
   return (
     <TextField
-      value={search}
       onChange={handleSearch}
-      inputRef={searchRef}
+      defaultValue=""
       label="Buscar"
       type="text"
       variant="outlined"

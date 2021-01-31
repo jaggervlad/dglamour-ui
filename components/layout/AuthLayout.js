@@ -18,13 +18,13 @@ export function NotSignIn() {
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Please LogIn!
+          Porfavor Inicia Sesión
         </Typography>
 
         <Grid container justify="center">
           <Grid item>
             <Link href="/signin" variant="body2">
-              Already have an account? Sign in
+              Ya tienes una cuenta? Da click aqui!
             </Link>
           </Grid>
         </Grid>

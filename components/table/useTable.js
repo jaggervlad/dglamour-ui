@@ -6,10 +6,14 @@ import {
   TableRow,
   TableSortLabel,
   TablePagination,
+  TableContainer,
 } from '@material-ui/core';
 import React, { useState } from 'react';
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    maxHeight: 440,
+  },
   table: {
     marginTop: theme.spacing(3),
     '& thead th': {
@@ -45,7 +49,11 @@ export default function useTable(records, headCells, filterFn) {
   };
 
   const TblContainer = (props) => (
-    <Table className={classes.table}>{props.children}</Table>
+    <TableContainer className={classes.container}>
+      <Table stickyHeader aria-label="sticky table" className={classes.table}>
+        {props.children}
+      </Table>
+    </TableContainer>
   );
 
   const TblHead = (props) => {

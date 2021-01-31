@@ -32,6 +32,12 @@ export const ORDERS_PAID = gql`
         id
         nombre
       }
+      pedido {
+        id
+        cantidad
+        nombre
+        precio
+      }
       direccion
       total
       estado
@@ -58,6 +64,7 @@ export const ALL_ORDERS = gql`
     obtenerPedidos(offset: $offset) {
       id
       cliente {
+        id
         nombre
       }
       pedido {

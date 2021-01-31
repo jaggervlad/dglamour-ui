@@ -3,11 +3,11 @@ import { useFormStyles } from '@/styles/makeStyles/forms';
 import { useMutation } from '@apollo/client';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Grid } from '@material-ui/core';
-import { useRouter } from 'next/router';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { PaySchema } from 'validationSchemas/order';
+import { Form } from '../forms/Form';
 import FormInput from '../forms/FormInput';
 import FormSelect from '../forms/FormSelect';
 
@@ -17,11 +17,10 @@ const options = [
   { id: 'MIXTO', label: 'MIXTO' },
 ];
 
-export default function FormPay({ order, id }) {
+export default function OrderFormPay({ order, id, setOpen }) {
   const preload = { descripcion: order.descripcion, pago: order.pago };
   const [actualizarPedido] = useMutation(UPDATE_ORDER);
   const classes = useFormStyles();
-  const router = useRouter();
   const methods = useForm({
     defaultValues: preload,
     resolver: yupResolver(PaySchema),
@@ -33,8 +32,8 @@ export default function FormPay({ order, id }) {
     const input = { ...data };
     try {
       await actualizarPedido({ variables: { id, input } });
-      router.push('/orders');
-      Swal.fire('Correcto', 'El producto se actualió correctamente', 'success');
+      setOpen(false);
+      Swal.fire('Correcto', 'Pedido Actualizado', 'success');
     } catch (error) {
       const errorMessage = error.message.replace('Graphql error: ', '');
       Swal.fire('Error', errorMessage, 'error');
@@ -42,7 +41,7 @@ export default function FormPay({ order, id }) {
   }
   return (
     <FormProvider {...methods}>
-      <form className={classes.form}>
+      <Form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <FormSelect
@@ -73,9 +72,9 @@ export default function FormPay({ order, id }) {
           className={classes.submit}
           onClick={handleSubmit(onSubmit)}
         >
-          guardar cambios
+          guardar
         </Button>
-      </form>
+      </Form>
     </FormProvider>
   );
 }

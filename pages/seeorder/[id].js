@@ -25,6 +25,7 @@ import { handleShippingOrder } from '@/utils/events/pdf';
 import React from 'react';
 import Link from 'next/link';
 import { useDeleteOrderRedirect } from '@/hooks/useDeleteOrder';
+import OrderEditButton from '@/components/orders/OrderEditButton';
 
 export default function seeorder() {
   const router = useRouter();
@@ -155,20 +156,18 @@ export default function seeorder() {
               </Grid>
             </CardContent>
             <CardActions>
-              <Button
-                size="small"
-                color="secondary"
-                variant="contained"
-                onClick={handleDelete}
-              >
-                <DeleteIcon />
-              </Button>
-
-              <Link href="/order/[id]" as={`/order/${id}`}>
-                <Button size="small" color="primary" variant="contained">
-                  <EditIcon />
+              {estado === 'PENDIENTE' && (
+                <Button
+                  size="small"
+                  color="secondary"
+                  variant="contained"
+                  onClick={handleDelete}
+                >
+                  <DeleteIcon />
                 </Button>
-              </Link>
+              )}
+
+              {estado === 'PENDIENTE' && <OrderEditButton id={id} />}
 
               <Button
                 size="small"

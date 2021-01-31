@@ -1,28 +1,40 @@
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
-import AuthLayout from '../layout/AuthLayout';
-import { Title } from '../customs/Title';
-import Button from '@material-ui/core/Button';
-import { useRouter } from 'next/router';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import PaidTable from './PaidTable';
-import Search from '../customs/Search';
 import { useQuery } from '@apollo/client';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import Alert from '@material-ui/lab/Alert';
+
+import AuthLayout from '../layout/AuthLayout';
+import { Title } from '../customs/Title';
+import Search from '../customs/Search';
 import { ORDERS_PAID } from '@/graphql/orders';
-import { LocalShipping } from '@material-ui/icons';
+import OrderPaidTable from './OrderPaidTable';
+import ButtonIcon from '../controls/ButtonIcon';
 
 export default function ListOrderPaid() {
   const { data, loading, error } = useQuery(ORDERS_PAID);
-  const router = useRouter();
+  const [filterFn, setFilterFn] = useState({
+    fn: (items) => {
+      return items;
+    },
+  });
 
-  const [search, setSearch] = useState('');
-  const searchRef = useRef();
-
-  const handleSearch = useCallback(() => {
-    setSearch(searchRef.current.value);
-  }, []);
+  const handleSearch = (e) => {
+    let target = e.target;
+    setFilterFn({
+      fn: (items) => {
+        if (target.value == '') return items;
+        else
+          return items.filter(
+            (x) =>
+              x.cliente?.nombre?.toLowerCase().includes(target.value) ||
+              x.id.toLowerCase().includes(target.value)
+          );
+      },
+    });
+  };
 
   return (
     <AuthLayout>
@@ -37,37 +49,25 @@ export default function ListOrderPaid() {
           justify="space-between"
         >
           <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ marginRight: '5px' }}
-              onClick={() => router.push('/orders')}
-            >
+            <ButtonIcon redirect="orders">
               <ArrowBackIcon />
-            </Button>
+            </ButtonIcon>
 
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ marginRight: '5px' }}
-              onClick={() => router.push('/ordersdispatched')}
-            >
-              <LocalShipping />
-            </Button>
+            <ButtonIcon redirect="ordersdispatched">
+              <LocalShippingIcon />
+            </ButtonIcon>
           </Grid>
 
           <Grid item>
-            <Search
-              search={search}
-              handleSearch={handleSearch}
-              searchRef={searchRef}
-            />
+            <Search handleSearch={handleSearch} />
           </Grid>
         </Grid>
 
         {loading && <CircularProgress />}
         {error && <Alert severity="error">{error.message}</Alert>}
-        {data && <PaidTable rows={data.pedidosPagados} search={search} />}
+        {data && (
+          <OrderPaidTable orders={data.pedidosPagados} filterFn={filterFn} />
+        )}
       </Grid>
     </AuthLayout>
   );
