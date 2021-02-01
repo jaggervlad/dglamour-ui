@@ -64,7 +64,6 @@ export const ALL_USERS = gql`
       id
       nombre
       username
-      rol
     }
   }
 `;

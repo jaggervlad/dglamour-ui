@@ -52,8 +52,6 @@ export default function seeorder() {
   const { mail, nombre, telefono } = cliente;
   const { nombre: vendedorNombre } = vendedor;
 
-  console.log(vendedor);
-
   return (
     <AuthLayout>
       <Button

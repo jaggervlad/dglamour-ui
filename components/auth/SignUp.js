@@ -48,7 +48,6 @@ export default function SignUp() {
 
   async function onSubmit(data) {
     const { username, password, passwordConfirm, nombre, rol } = data;
-    console.log(data);
 
     if (password !== passwordConfirm) {
       return Swal.fire('Error', 'Password do not match', 'error');

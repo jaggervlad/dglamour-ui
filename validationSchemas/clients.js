@@ -6,10 +6,7 @@ export const ClientSchema = Yup.object().shape({
   mail: Yup.string()
     .email('Email no válido')
     .required('Este campo es obligatorio'),
-  telefono: Yup.number()
-    .min(5)
-    .max(20)
-    .required('Digite un numero de telefono valido'),
+  telefono: Yup.number().required('Digite un numero de telefono valido'),
   direccion: Yup.string().required('Este campo es obligatorio'),
   ciudad: Yup.string().required('Este campo es obligatorio'),
 });

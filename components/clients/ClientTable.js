@@ -26,7 +26,7 @@ export default function ClientTable({ clients, filterFn }) {
         <TableRow key={item.id}>
           <TableCell>{item.nombre}</TableCell>
           <TableCell align="center">{item.cedula}</TableCell>
-          <TableCell align="center">{item.telefono}</TableCell>
+          <TableCell align="center">0{item.telefono}</TableCell>
           <TableCell align="center">{item.mail}</TableCell>
 
           <TableCell align="center">

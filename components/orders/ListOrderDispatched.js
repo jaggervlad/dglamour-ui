@@ -36,8 +36,6 @@ export default function ListOrderDispatched() {
     });
   };
 
-  console.log(data?.pedidosDespachados);
-
   return (
     <AuthLayout>
       <Grid item container xs={12} md={8} lg={12}>

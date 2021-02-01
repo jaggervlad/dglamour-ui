@@ -56,7 +56,7 @@ export default function ListUser() {
         </Grid>
 
         {loading && <CircularProgress />}
-        {error && <Alert severity="error">error.message</Alert>}
+        {error && <Alert severity="error">{error.message}</Alert>}
         {data && <CustomTable rows={data.obtenerUsuarios} search={search} />}
       </Grid>
     </AuthLayout>
