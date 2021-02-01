@@ -12,6 +12,7 @@ import Search from '../customs/Search';
 import { ORDERS_PAID } from '@/graphql/orders';
 import OrderPaidTable from './OrderPaidTable';
 import ButtonIcon from '../controls/ButtonIcon';
+import OrderPaidTableSkeleton from './OrderPaidTableSkeleton';
 
 export default function ListOrderPaid() {
   const { data, loading, error } = useQuery(ORDERS_PAID);
@@ -63,7 +64,7 @@ export default function ListOrderPaid() {
           </Grid>
         </Grid>
 
-        {loading && <CircularProgress />}
+        {loading && <OrderPaidTableSkeleton />}
         {error && <Alert severity="error">{error.message}</Alert>}
         {data && (
           <OrderPaidTable orders={data.pedidosPagados} filterFn={filterFn} />

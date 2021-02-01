@@ -19,6 +19,7 @@ import FormInput from '../forms/FormInput';
 import ErrorInput from '../forms/ErrorInput';
 import { useFormStyles } from '../../styles/makeStyles/forms';
 import { setAccessToken } from '@/utils/accessToken';
+import { Form } from '../forms/Form';
 
 export default function SignIn() {
   const router = useRouter();
@@ -60,7 +61,7 @@ export default function SignIn() {
         </Typography>
 
         <FormProvider {...methods}>
-          <form className={classes.form}>
+          <Form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
             <FormInput name="username" label="Usuario" />
             <ErrorInput errors={errors} name={'username'} />
 
@@ -74,11 +75,10 @@ export default function SignIn() {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={handleSubmit(onSubmit)}
             >
               ingresar
             </Button>
-          </form>
+          </Form>
         </FormProvider>
       </div>
 

@@ -37,8 +37,8 @@ export const NEW_USER = gql`
 `;
 
 export const GET_USER = gql`
-  query obtenerUsuario {
-    obtenerUsuario {
+  query usuario($id: ID!) {
+    usuario(id: $id) {
       id
       nombre
       username
@@ -64,6 +64,7 @@ export const ALL_USERS = gql`
       id
       nombre
       username
+      rol
     }
   }
 `;

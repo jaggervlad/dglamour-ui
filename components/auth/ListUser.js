@@ -2,26 +2,38 @@ import React, { useCallback, useState, useRef } from 'react';
 import Grid from '@material-ui/core/Grid';
 import AuthLayout from '../layout/AuthLayout';
 import { Title } from '../customs/Title';
-import Button from '@material-ui/core/Button';
-import { useRouter } from 'next/router';
-import AddIcon from '@material-ui/icons/Add';
-import CustomTable from './CustomTable';
 import Search from '../customs/Search';
 import { useQuery } from '@apollo/client';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
 import { ALL_USERS } from '@/graphql/auth';
+import UserAddButton from './UserAddButton';
+import UserTable from './UserTable';
+import UserTableSkeleton from './UserTableSkeleton';
 
 export default function ListUser() {
   const { data, loading, error } = useQuery(ALL_USERS);
-  const router = useRouter();
+  const [filterFn, setFilterFn] = useState({
+    fn: (items) => {
+      return items;
+    },
+  });
 
   const [search, setSearch] = useState('');
   const searchRef = useRef();
 
-  const handleSearch = useCallback(() => {
-    setSearch(searchRef.current.value);
-  }, []);
+  const handleSearch = (e) => {
+    let target = e.target;
+
+    setFilterFn({
+      fn: (items) => {
+        if (target.value == '') return items;
+        else
+          return items.filter((x) =>
+            x.nombre.toLowerCase().includes(target.value)
+          );
+      },
+    });
+  };
 
   return (
     <AuthLayout>
@@ -36,14 +48,7 @@ export default function ListUser() {
           justify="space-between"
         >
           <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ marginRight: '5px' }}
-              onClick={() => router.push('/signup')}
-            >
-              <AddIcon />
-            </Button>
+            <UserAddButton />
           </Grid>
 
           <Grid item>
@@ -55,9 +60,9 @@ export default function ListUser() {
           </Grid>
         </Grid>
 
-        {loading && <CircularProgress />}
+        {loading && <UserTableSkeleton />}
         {error && <Alert severity="error">{error.message}</Alert>}
-        {data && <CustomTable rows={data.obtenerUsuarios} search={search} />}
+        {data && <UserTable users={data.obtenerUsuarios} filterFn={filterFn} />}
       </Grid>
     </AuthLayout>
   );

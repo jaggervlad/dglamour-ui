@@ -1,26 +1,21 @@
-import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import { useFormStyles } from '../../styles/makeStyles/forms';
-import FormInput from '../forms/FormInput';
-import { FormProvider, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation } from '@apollo/client';
-import Swal from 'sweetalert2';
-import { useRouter } from 'next/router';
-import FormSelect from '../forms/FormSelect';
-import { SignupSchema } from 'validationSchemas/auth';
 import { NEW_USER } from '@/graphql/auth';
+import { useMutation } from '@apollo/client';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Button, Grid } from '@material-ui/core';
+import React from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import Swal from 'sweetalert2';
+import { SignupSchema } from 'validationSchemas/auth';
+import { Form } from '../forms/Form';
+import FormInput from '../forms/FormInput';
+import FormSelect from '../forms/FormSelect';
 
 let rolOpts = [
   { id: 'ADMINISTRADOR', label: 'ADMINISTRADOR' },
   { id: 'USUARIO', label: 'USUARIO' },
+  { id: 'SUSPENDIDO', label: 'SUSPENDIDO' },
 ];
-
-export default function EditForm(props) {
-  const classes = useFormStyles();
-  const router = useRouter();
-  const { id, user } = props;
+export default function UserEditForm({ setOpen, id, user }) {
   const [nuevoUsuario] = useMutation(NEW_USER, { variables: { id } });
   const preload = {
     ...user,
@@ -45,17 +40,17 @@ export default function EditForm(props) {
         variables: { id, input },
       });
 
-      router.push('/users');
+      setOpen(false);
       Swal.fire('Actualizado', 'Usuario editado  correctamente', 'success');
     } catch (error) {
+      setOpen(false);
       const errorMsg = error.message.replace('Graphql error:', '');
       Swal.fire('Error', errorMsg, 'error');
     }
   }
-
   return (
     <FormProvider {...methods}>
-      <form className={classes.form}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <FormInput
@@ -107,12 +102,10 @@ export default function EditForm(props) {
           fullWidth
           variant="contained"
           color="primary"
-          className={classes.submit}
-          onClick={handleSubmit(onSubmit)}
         >
-          editar
+          guardar cambios
         </Button>
-      </form>
+      </Form>
     </FormProvider>
   );
 }

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { useQuery } from '@apollo/client';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import Alert from '@material-ui/lab/Alert';
 
@@ -12,6 +11,7 @@ import Search from '../customs/Search';
 import { ORDERS_DISPATCHED } from '@/graphql/orders';
 import OrderDispatchTable from './OrderDispatchTable';
 import ButtonIcon from '../controls/ButtonIcon';
+import OrderDispatchTableSkeleton from './OrderDispatchTableSkeleton';
 
 export default function ListOrderDispatched() {
   const { data, loading, error } = useQuery(ORDERS_DISPATCHED);
@@ -63,7 +63,7 @@ export default function ListOrderDispatched() {
           </Grid>
         </Grid>
 
-        {loading && <CircularProgress />}
+        {loading && <OrderDispatchTableSkeleton />}
         {error && <Alert severity="error">{error.message}</Alert>}
         {data && (
           <OrderDispatchTable
