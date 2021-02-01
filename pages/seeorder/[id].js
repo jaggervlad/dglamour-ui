@@ -129,16 +129,20 @@ export default function seeorder() {
                     ))}
                   </Box>
 
-                  {costEnv && (
+                  {costEnv ? (
                     <Typography variant="body1">
                       Costo de Envio <span>$ {costEnv}</span>
                     </Typography>
+                  ) : (
+                    ''
                   )}
 
-                  {descuento && (
+                  {descuento ? (
                     <Typography variant="body1">
                       Descuento <span>$ {descuento}</span>
                     </Typography>
+                  ) : (
+                    ''
                   )}
 
                   <Typography variant="h4" style={{ marginTop: '50px' }}>
@@ -146,10 +150,14 @@ export default function seeorder() {
                     <span style={{ fontSize: '25px' }}>$ {total}</span>
                   </Typography>
 
-                  <Typography variant="h4" style={{ marginTop: '50px' }}>
-                    Vendedor:{' '}
-                    <span style={{ fontSize: '25px' }}>{vendedorNombre}</span>
-                  </Typography>
+                  {vendedorNombre ? (
+                    <Typography variant="h4" style={{ marginTop: '50px' }}>
+                      Vendedor:{' '}
+                      <span style={{ fontSize: '25px' }}>{vendedorNombre}</span>
+                    </Typography>
+                  ) : (
+                    ''
+                  )}
                 </Grid>
               </Grid>
             </CardContent>

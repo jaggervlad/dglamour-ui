@@ -4,6 +4,7 @@ import { useMutation } from '@apollo/client';
 import Controls from '../controls/Controls';
 import { useRouter } from 'next/router';
 import { setAccessToken } from '@/utils/accessToken';
+import { ExitToApp } from '@material-ui/icons';
 
 export default function LogoutButton() {
   const [logout, { client }] = useMutation(LOGOUT);
@@ -24,6 +25,7 @@ export default function LogoutButton() {
       text="Cerrar Sesion"
       size="small"
       onClick={handleLogout}
+      startIcon={<ExitToApp />}
     />
   );
 }

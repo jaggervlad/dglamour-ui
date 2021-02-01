@@ -81,15 +81,17 @@ export default function StatusChange(props) {
       margin="dense"
       onChange={(e) => changeStatusOrder(e.target.value)}
     >
-      <MenuItem value={'PENDIENTE'}>
-        <em>PENDIENTE</em>
-      </MenuItem>
-      <MenuItem value="PAGADO">
-        <em>PAGADO</em>
-      </MenuItem>
-      <MenuItem value="DESPACHADO">
-        <em>DESPACHADO</em>
-      </MenuItem>
+      {status !== 'PAGADO' && (
+        <MenuItem value={'PENDIENTE'}>
+          <em>PENDIENTE</em>
+        </MenuItem>
+      )}
+
+      {status !== 'DESPACHADO' && (
+        <MenuItem value="PAGADO">
+          <em>PAGADO</em>
+        </MenuItem>
+      )}
     </Select>
   );
 }

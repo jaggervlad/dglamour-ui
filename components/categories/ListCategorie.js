@@ -11,6 +11,7 @@ import { ALL_CATEGORIES } from '@/graphql/categories';
 import CategorieAddButton from './CategorieAddButton';
 import CategorieTable from './CategorieTable';
 import Search from '../customs/Search';
+import CategorieTableSkeleton from './CategorieTableSkeleton';
 
 export default function ListCategorie() {
   const { data, loading, error } = useQuery(ALL_CATEGORIES);
@@ -55,7 +56,7 @@ export default function ListCategorie() {
           </Grid>
         </Grid>
 
-        {loading && <CircularProgress />}
+        {loading && <CategorieTableSkeleton />}
         {error && <Alert severity="error">{error.message}</Alert>}
         {data && (
           <CategorieTable

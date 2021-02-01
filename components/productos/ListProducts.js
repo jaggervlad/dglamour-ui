@@ -8,6 +8,7 @@ import AuthLayout from '../layout/AuthLayout';
 import Search from '../customs/Search';
 import ProductAddButton from './ProductAddButton';
 import ProductTable from './ProductTable';
+import ProductTableSkeleton from './ProductTableSkeleton';
 import { Title } from '../customs/Title';
 import { ALL_PRODUCTS } from '@/graphql/products';
 
@@ -53,7 +54,7 @@ export default function ListProducts() {
           </Grid>
         </Grid>
 
-        {loading && <CircularProgress />}
+        {loading && <ProductTableSkeleton />}
         {error && <Alert severity="error">error.message</Alert>}
         {data && (
           <ProductTable products={data.allProducts} filterFn={filterFn} />

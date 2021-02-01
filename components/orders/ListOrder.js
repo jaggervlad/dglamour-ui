@@ -3,7 +3,6 @@ import Grid from '@material-ui/core/Grid';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import Alert from '@material-ui/lab/Alert';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { useQuery } from '@apollo/client';
 
 import { Title } from '../customs/Title';
@@ -13,6 +12,7 @@ import Search from '../customs/Search';
 import OrderAddButton from './OrderAddButton';
 import OrderTable from './OrderTable';
 import ButtonIcon from '../controls/ButtonIcon';
+import OrderTableSkeleton from './OrderTableSkeleton';
 
 export default function ListOrder() {
   const { data, loading, error } = useQuery(ALL_ORDERS);
@@ -66,7 +66,7 @@ export default function ListOrder() {
           </Grid>
         </Grid>
 
-        {loading && <CircularProgress />}
+        {loading && <OrderTableSkeleton />}
         {error && <Alert severity="error">{error.message}</Alert>}
         {data && (
           <OrderTable orders={data.obtenerPedidos} filterFn={filterFn} />

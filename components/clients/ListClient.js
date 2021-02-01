@@ -4,11 +4,11 @@ import AuthLayout from '../layout/AuthLayout';
 import { Title } from '../customs/Title';
 import Search from '../customs/Search';
 import { useQuery } from '@apollo/client';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
 import { ALL_CLIENTS } from '@/graphql/clients';
 import ClientAddButton from './ClientAddButton';
 import ClientTable from './ClientTable';
+import ClientTableSkeleton from './ClientTableSkeleton';
 
 export default function ListClient() {
   const { data, loading, error } = useQuery(ALL_CLIENTS);
@@ -52,8 +52,8 @@ export default function ListClient() {
           </Grid>
         </Grid>
 
-        {loading && <CircularProgress />}
-        {error && <Alert severity="error">error.message</Alert>}
+        {loading && <ClientTableSkeleton />}
+        {error && <Alert severity="error">{error.message}</Alert>}
         {data && (
           <ClientTable clients={data.obtenerClientes} filterFn={filterFn} />
         )}

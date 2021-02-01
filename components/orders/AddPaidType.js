@@ -2,7 +2,6 @@ import { NotSignIn } from '@/components/layout/AuthLayout';
 import OrderFormPay from '@/components/orders/OrderFormPay';
 import { GET_ORDER } from '@/graphql/orders';
 import { useQuery } from '@apollo/client';
-import { CircularProgress } from '@material-ui/core';
 import Popup from '../customs/Popup';
 
 export default function AddPaidType({ id, open, setOpen }) {
@@ -12,7 +11,7 @@ export default function AddPaidType({ id, open, setOpen }) {
 
   return (
     <>
-      {loading && <CircularProgress />}
+      {loading && null}
       {error && <NotSignIn />}
       {data && (
         <Popup title="Tipo de Pago" openPopup={open} setOpenPopup={setOpen}>
