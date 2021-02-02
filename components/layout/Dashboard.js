@@ -20,7 +20,7 @@ export default function Dashboard({ children, user }) {
 
   return (
     <div className={classes.root}>
-      <Header handleDrawerOpen={handleDrawerOpen} user={user} />
+      <Header handleDrawerOpen={handleDrawerOpen} user={user} open={open} />
       <SideMenu handleDrawerClose={handleDrawerClose} open={open} />
       <MainContent>{children}</MainContent>
     </div>

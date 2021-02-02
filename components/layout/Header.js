@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import React from 'react';
 import LogoutButton from '../customs/LogoutButton';
 
-export default function Header({ handleDrawerOpen, user }) {
+export default function Header({ handleDrawerOpen, user, open }) {
   const classes = useStyles();
 
   return (
