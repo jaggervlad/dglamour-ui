@@ -5,7 +5,7 @@ import OrderSeeButton from './OrderSeeButton';
 import OrderPdfButton from './OrderPdfButton';
 import StatusChange from './StatusChange';
 import { useStatusChange } from '@/hooks/useStatusChange';
-import { Grid, TableCell } from '@material-ui/core';
+import { TableCell } from '@material-ui/core';
 export default function Order({ order }) {
   const products = order.pedido.map(({ __typename, ...product }) => product);
   const { id, total, cliente, estado, direccion } = order;
@@ -30,6 +30,9 @@ export default function Order({ order }) {
         />
       </TableCell>
 
+      <TableCell align="center">
+        <OrderPdfButton id={id} />
+      </TableCell>
       <TableCell align="center">
         <OrderAddPaidButton id={id} />
       </TableCell>

@@ -9,6 +9,7 @@ const headCells = [
   { id: 'direccion', label: 'Dirección', disableSorting: true },
   { id: 'total', label: 'Total', disableSorting: true },
   { id: 'estado', label: 'Estado', disableSorting: true },
+  { id: 'imprimir', label: 'Imprimir', disableSorting: true },
   { id: 'pago', label: 'Pago', disableSorting: true },
   { id: 'ver', label: 'Ver', disableSorting: true },
   { id: 'eliminar', label: 'Eliminar', disableSorting: true },
