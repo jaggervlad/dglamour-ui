@@ -9,7 +9,7 @@ export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
 let apolloClient;
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:4000/graphql',
+  uri: 'https://blooming-citadel-99802.herokuapp.com/graphql',
   credentials: 'include',
   fetch,
 });
