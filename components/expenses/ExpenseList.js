@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
+import Alert from '@material-ui/lab/Alert';
+import { useQuery } from '@apollo/client';
+
+import ExpenseTable from './ExpenseTable';
+import ExpenseTableSkeleton from './ExpenseTableSkeleton';
 import AuthLayout from '../layout/AuthLayout';
 import { Title } from '../customs/Title';
 import Search from '../customs/Search';
-import { useQuery } from '@apollo/client';
-import Alert from '@material-ui/lab/Alert';
-import { ALL_CLIENTS } from '@/graphql/clients';
-import ClientAddButton from './ClientAddButton';
-import ClientTable from './ClientTable';
-import ClientTableSkeleton from './ClientTableSkeleton';
+import { ALL_EXPENSE } from '@/graphql/expenses';
+import ExpenseAddButton from './ExpenseAddButton';
 
-export default function ListClient() {
-  const { data, loading, error } = useQuery(ALL_CLIENTS);
+export default function ExpenseList() {
+  const { data, loading, error } = useQuery(ALL_EXPENSE);
   const [filterFn, setFilterFn] = useState({
     fn: (items) => {
       return items;
@@ -27,7 +28,7 @@ export default function ListClient() {
           return items.filter(
             (x) =>
               x.nombre.toLowerCase().includes(target.value) ||
-              x.cedula.toLowerCase().includes(target.value)
+              x.ruc.toLowerCase().includes(target.value)
           );
       },
     });
@@ -36,7 +37,7 @@ export default function ListClient() {
   return (
     <AuthLayout>
       <Grid item container xs={12} md={8} lg={12}>
-        <Title>Clientes</Title>
+        <Title>Gastos</Title>
 
         <Grid
           item
@@ -46,7 +47,7 @@ export default function ListClient() {
           justify="space-between"
         >
           <Grid item>
-            <ClientAddButton />
+            <ExpenseAddButton />
           </Grid>
 
           <Grid item>
@@ -54,10 +55,10 @@ export default function ListClient() {
           </Grid>
         </Grid>
 
-        {loading && <ClientTableSkeleton />}
+        {loading && <ExpenseTableSkeleton />}
         {error && <Alert severity="error">{error.message}</Alert>}
         {data && (
-          <ClientTable clients={data.obtenerClientes} filterFn={filterFn} />
+          <ExpenseTable expenses={data.allExpenses} filterFn={filterFn} />
         )}
       </Grid>
     </AuthLayout>

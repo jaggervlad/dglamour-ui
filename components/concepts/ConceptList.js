@@ -5,12 +5,13 @@ import { Title } from '../customs/Title';
 import Search from '../customs/Search';
 import { useQuery } from '@apollo/client';
 import Alert from '@material-ui/lab/Alert';
-import ClientAddButton from './ClientAddButton';
+import ConceptAddButton from './ConceptAddButton';
 import ConceptTable from './ConceptTable';
 import ConceptTableSkeleton from './ConceptTableSkeleton';
+import { ALL_CONCEPTS } from '@/graphql/concepts';
 
 export default function ConceptList() {
-  // const { data, loading, error } = useQuery();
+  const { data, loading, error } = useQuery(ALL_CONCEPTS);
   const [filterFn, setFilterFn] = useState({
     fn: (items) => {
       return items;
@@ -33,7 +34,7 @@ export default function ConceptList() {
   return (
     <AuthLayout>
       <Grid item container xs={12} md={8} lg={12}>
-        <Title>Clientes</Title>
+        <Title>Concepto de Gastos</Title>
 
         <Grid
           item
@@ -43,7 +44,7 @@ export default function ConceptList() {
           justify="space-between"
         >
           <Grid item>
-            <ClientAddButton />
+            <ConceptAddButton />
           </Grid>
 
           <Grid item>
@@ -51,12 +52,11 @@ export default function ConceptList() {
           </Grid>
         </Grid>
 
-        {/* {loading && <ConceptTableSkeleton />}
+        {loading && <ConceptTableSkeleton />}
         {error && <Alert severity="error">{error.message}</Alert>}
         {data && (
-          <ConceptTable clients={data.obtenerClientes} filterFn={filterFn} />
-        )} */}
-        <ConceptTable clients={[]} filterFn={filterFn} />
+          <ConceptTable concepts={data.allConcepts} filterFn={filterFn} />
+        )}
       </Grid>
     </AuthLayout>
   );

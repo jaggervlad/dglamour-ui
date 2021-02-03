@@ -1,6 +1,5 @@
 import React from 'react';
 import { useStyles } from '../../styles/makeStyles/dashboard';
-import { useRouter } from 'next/router';
 import { NotSignIn } from './AuthLayout';
 import Header from './Header';
 import SideMenu from './SideMenu';

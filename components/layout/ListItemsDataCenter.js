@@ -39,7 +39,7 @@ export default function ListItemsDataCenter() {
         <ListItemText primary="Proveedores" />
       </ListItem>
 
-      <ListItem button onClick={() => router.push('/conpexpenses')}>
+      <ListItem button onClick={() => router.push('/concepts')}>
         <ListItemIcon>
           <PaymentIcon />
         </ListItemIcon>

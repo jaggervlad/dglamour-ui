@@ -5,16 +5,32 @@ import { Paper, TableBody, TableCell, TableRow } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 
 const headCells = [
-  { id: 'nombre', label: 'Nombre' },
+  { id: 'proveedor', label: 'Proveedor' },
+  { id: 'concepto', label: 'Concepto Gasto' },
+  { id: 'comprobante', label: 'Nº Boleta' },
+  { id: 'importe', label: 'Importe' },
+  { id: 'observacion', label: 'Observación' },
   { id: 'acciones', label: 'Acciones' },
 ];
-export default function ConceptTableSkeleton() {
+export default function ExpenseTableSkeleton() {
   const { TblContainer, TblHead } = useTableSkeleton(headCells);
 
   const TblBody = () => (
     <TableBody>
       {headCells.map((item) => (
         <TableRow key={item.id}>
+          <TableCell>
+            <Skeleton animation="wave" />
+          </TableCell>
+          <TableCell>
+            <Skeleton animation="wave" />
+          </TableCell>
+          <TableCell>
+            <Skeleton animation="wave" />
+          </TableCell>
+          <TableCell>
+            <Skeleton animation="wave" />
+          </TableCell>
           <TableCell>
             <Skeleton animation="wave" />
           </TableCell>

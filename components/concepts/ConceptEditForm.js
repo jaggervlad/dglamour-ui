@@ -1,40 +1,40 @@
 import React from 'react';
-import FormInput from '../forms/FormInput';
+import Grid from '@material-ui/core/Grid';
+import Swal from 'sweetalert2';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { useMutation } from '@apollo/client';
-import Swal from 'sweetalert2';
-import { Grid } from '@material-ui/core';
-import Controls from '../controls/Controls';
+import FormInput from '../forms/FormInput';
 import { Form } from '../forms/Form';
-import { ALL_CONCEPTS, NEW_CONCEPT } from '@/graphql/concepts';
+import Controls from '../controls/Controls';
+import { useMutation } from '@apollo/client';
+import { UPDATE_CONCEPT } from '@/graphql/concepts';
 
-export default function ConceptAddForm({ setOpen }) {
-  const [addConcept] = useMutation(NEW_CONCEPT, {
-    update(cache, { data: addConcept }) {
-      const { allConcepts } = cache.readQuery({ query: ALL_CONCEPTS });
-
-      cache.writeQuery({
-        query: ALL_CONCEPTS,
-        data: {
-          allConcepts: [...allConcepts, addConcept],
-        },
-      });
-    },
+export default function ConceptEditForm(props) {
+  const [updateConcept] = useMutation(UPDATE_CONCEPT);
+  const { id, concept, setOpen } = props;
+  const preload = {
+    ...concept,
+  };
+  const methods = useForm({
+    defaultValues: preload,
   });
-  const methods = useForm();
+
   const { handleSubmit, formState, errors } = methods;
   const { isSubmitting } = formState;
+
   async function onSubmit(data) {
     const input = {
       ...data,
     };
     try {
-      await addConcept({ variables: { input } });
+      await updateConcept({
+        variables: { id, input },
+      });
+
       setOpen(false);
       Swal.fire({
-        title: 'Creado',
-        text: 'Se creó  correctamente',
+        title: 'Actualizado',
+        text: 'Se edito correctamente',
         icon: 'success',
         timer: 1500,
       });
@@ -49,6 +49,7 @@ export default function ConceptAddForm({ setOpen }) {
       });
     }
   }
+
   return (
     <FormProvider {...methods}>
       <Form onSubmit={handleSubmit(onSubmit)}>
@@ -62,7 +63,11 @@ export default function ConceptAddForm({ setOpen }) {
           </Grid>
         </Grid>
 
-        <Controls.Button disabled={isSubmitting} type="submit" text="crear" />
+        <Controls.Button
+          disabled={isSubmitting}
+          text="guardar cambios"
+          type="submit"
+        />
       </Form>
     </FormProvider>
   );

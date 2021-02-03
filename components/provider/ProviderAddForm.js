@@ -1,32 +1,27 @@
 import React from 'react';
 import FormInput from '../forms/FormInput';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useFormStyles } from '../../styles/makeStyles/forms';
 
-import { ClientSchema } from 'validationSchemas/clients';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@apollo/client';
-import { ALL_CLIENTS, NEW_CLIENT } from '@/graphql/clients';
 import Swal from 'sweetalert2';
 import { Grid } from '@material-ui/core';
 import Controls from '../controls/Controls';
 import { Form } from '../forms/Form';
+import { ALL_PROVIDER, NEW_PROVIDER } from '@/graphql/providers';
 
-export default function ClientAddForm({ setOpen }) {
-  const classes = useFormStyles();
-  const methods = useForm({
-    resolver: yupResolver(ClientSchema),
-  });
-  const [nuevoCliente] = useMutation(NEW_CLIENT, {
-    update(cache, { data: nuevoCliente }) {
-      const { obtenerClientes } = cache.readQuery({
-        query: ALL_CLIENTS,
+export default function ProviderAddForm({ setOpen }) {
+  const methods = useForm({});
+  const [addProvider] = useMutation(NEW_PROVIDER, {
+    update(cache, { data: addProvider }) {
+      const { allProviders } = cache.readQuery({
+        query: ALL_PROVIDER,
       });
 
       cache.writeQuery({
-        query: ALL_CLIENTS,
+        query: ALL_PROVIDER,
         data: {
-          obtenerClientes: [...obtenerClientes, nuevoCliente],
+          allProviders: [...allProviders, addProvider],
         },
       });
     },
@@ -35,38 +30,49 @@ export default function ClientAddForm({ setOpen }) {
   const { isSubmitting } = formState;
 
   async function onSubmit(data) {
+    console.log(data);
     const input = {
-      telefono: +data.telefono,
       ...data,
     };
+    console.log(input);
 
     try {
-      await nuevoCliente({
+      await addProvider({
         variables: { input },
       });
 
       setOpen(false);
-      Swal.fire('Creado', 'Se creó cliente correctamente', 'success');
+      Swal.fire({
+        title: 'Creado',
+        text: 'Se creó  correctamente',
+        icon: 'success',
+        timer: 1500,
+      });
     } catch (error) {
       setOpen(false);
       const errorMsg = error.message.replace('Graphql error:', '');
-      Swal.fire('Error', errorMsg, 'error');
+      Swal.fire({
+        title: 'Error',
+        text: errorMsg,
+        icon: 'error',
+        timer: 1500,
+      });
     }
   }
   return (
     <FormProvider {...methods}>
-      <Form onSubmit={handleSubmit(onSubmit)} claseName={classes.form}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={1}>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <FormInput
               name="nombre"
-              label="Nombre Completo"
+              label="Nombre o Razón Social"
               errorobj={errors}
             />
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <FormInput name="cedula" label="Nº Cédula" errorobj={errors} />
+            <FormInput name="ruc" label="Nº R.U.C" errorobj={errors} />
           </Grid>
           <Grid item xs={12} sm={6}>
             <FormInput name="telefono" label="Nº Celular" errorobj={errors} />
@@ -74,14 +80,10 @@ export default function ClientAddForm({ setOpen }) {
 
           <Grid item xs={12} sm={6}>
             <FormInput
-              name="mail"
-              type="email"
-              label="Correo"
+              name="contacto"
+              label="Persona de Contacto"
               errorobj={errors}
             />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormInput name="ciudad" label="Ciudad" errorobj={errors} />
           </Grid>
 
           <Grid item xs={12}>

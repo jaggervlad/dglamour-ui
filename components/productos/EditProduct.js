@@ -1,6 +1,5 @@
 import React from 'react';
 import ProductEditForm from './ProductEditForm';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { ALL_CATEGORIES } from '@/graphql/categories';
 import { GET_PRODUCT } from '@/graphql/products';
 import { useQuery } from '@apollo/client';

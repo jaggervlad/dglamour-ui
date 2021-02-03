@@ -1,29 +1,28 @@
 import { Button } from '@material-ui/core';
 import { Delete as DeleteIcon } from '@material-ui/icons';
 import React from 'react';
-import { ALL_CONCEPTS, DELETE_CONCEPT } from '@/graphql/concepts';
 import Swal from 'sweetalert2';
 import { useMutation } from '@apollo/client';
+import { ALL_PROVIDER, DELETE_PROVIDER } from '@/graphql/providers';
 
-export default function ConceptDeleteButton({ id }) {
-  const [deleteConcept] = useMutation(DELETE_CONCEPT, {
+export default function ProviderDeleteButton({ id }) {
+  const [deleteProvider] = useMutation(DELETE_PROVIDER, {
     update(cache) {
-      const { allConcepts } = cache.readQuery({ query: ALL_CONCEPTS });
+      const { allProviders } = cache.readQuery({ query: ALL_PROVIDER });
 
       cache.writeQuery({
-        query: ALL_CONCEPTS,
+        query: ALL_PROVIDER,
         data: {
-          allConcepts: allConcepts.filter((current) => current.id !== id),
+          allProviders: allProviders.filter((current) => current.id !== id),
         },
       });
     },
   });
   function handleDelete() {
     Swal.fire({
-      title: 'Deseas eliminar este concepto?',
+      title: 'Deseas eliminar este proveedor?',
       text: 'Esta acción no se puede deshacer',
       icon: 'warning',
-      timer: 1500,
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
@@ -32,9 +31,9 @@ export default function ConceptDeleteButton({ id }) {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await deleteConcept({ variables: { id } });
+          await deleteProvider({ variables: { id } });
           Swal.fire({
-            title: 'Correcto',
+            title: 'Correct',
             text: 'Eliminado',
             icon: 'success',
             timer: 1500,
@@ -43,7 +42,7 @@ export default function ConceptDeleteButton({ id }) {
           const errorMessage = error.message.replace('Graphql error: ', '');
           Swal.fire({
             title: 'Error',
-            text: errorMsg,
+            text: errorMessage,
             icon: 'error',
             timer: 1500,
           });

@@ -1,11 +1,12 @@
-import { Button } from '@material-ui/core';
 import React, { useState } from 'react';
-import Popup from '../customs/Popup';
-import ProductAddForm from './ProductAddForm';
+import { Button } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import ProviderAddForm from './ProviderAddForm';
+import Popup from '../customs/Popup';
 
-export default function ProductAddButton() {
+export default function ProviderAddButton() {
   const [open, setOpen] = useState(false);
+
   return (
     <>
       <Button
@@ -16,8 +17,8 @@ export default function ProductAddButton() {
       >
         <AddIcon />
       </Button>
-      <Popup title="Crear Producto" openPopup={open} setOpenPopup={setOpen}>
-        <ProductAddForm setOpen={setOpen} />
+      <Popup title="Crear Proveedor" openPopup={open} setOpenPopup={setOpen}>
+        <ProviderAddForm setOpen={setOpen} />
       </Popup>
     </>
   );
