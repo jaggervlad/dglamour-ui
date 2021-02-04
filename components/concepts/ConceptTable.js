@@ -5,7 +5,8 @@ import ConceptDeleteButton from './ConceptDeleteButton';
 import ConceptEditButton from './ConceptEditButton';
 
 const headCells = [
-  { id: 'nombre', label: 'Nombre' },
+  { id: 'codigo', label: 'Código', disableSorting: true },
+  { id: 'descripcion', label: 'Descripción', disableSorting: true },
   { id: 'acciones', label: 'Acciones', disableSorting: true },
 ];
 export default function ConceptTable({ concepts, filterFn }) {
@@ -21,7 +22,8 @@ export default function ConceptTable({ concepts, filterFn }) {
     <TableBody>
       {recordsAfterPagination().map((item) => (
         <TableRow key={item.id}>
-          <TableCell>{item.nombre}</TableCell>
+          <TableCell>{item.codigo}</TableCell>
+          <TableCell align="center">{item.descripcion}</TableCell>
 
           <TableCell align="center">
             <Grid container justify="center" spacing={2}>

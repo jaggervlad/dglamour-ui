@@ -2,9 +2,9 @@ import React from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import TextField from '@material-ui/core/TextField';
 
-export default function FormInput(componentProps) {
+export default function FormInputPicker(componentProps) {
   const { control } = useFormContext();
-  const { name, label, errorobj, type } = componentProps;
+  const { name, label, errorobj } = componentProps;
   let isError = false;
   let errorMessage = '';
   if (errorobj && errorobj.hasOwnProperty(name)) {
@@ -24,7 +24,8 @@ export default function FormInput(componentProps) {
           fullWidth={true}
           error={isError}
           helperText={errorMessage}
-          type={type}
+          type="date"
+          InputLabelProps={{ shrink: true }}
           {...componentProps}
         />
       )}

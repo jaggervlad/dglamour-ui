@@ -27,7 +27,8 @@ export default function ConceptAddForm({ setOpen }) {
   const { isSubmitting } = formState;
   async function onSubmit(data) {
     const input = {
-      ...data,
+      codigo: +data.codigo,
+      descripcion: data.descripcion,
     };
     try {
       await addConcept({ variables: { input } });
@@ -55,8 +56,16 @@ export default function ConceptAddForm({ setOpen }) {
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <FormInput
-              name="nombre"
-              label="Nombre o Descripción"
+              type="number"
+              name="codigo"
+              label="Código Gasto"
+              errorobj={errors}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormInput
+              name="descripcion"
+              label="Descripción"
               errorobj={errors}
             />
           </Grid>

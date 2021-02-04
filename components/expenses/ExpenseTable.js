@@ -9,6 +9,7 @@ const headCells = [
   { id: 'proveedor', label: 'Proveedor', disableSorting: true },
   { id: 'concepto', label: 'Concepto Gasto', disableSorting: true },
   { id: 'comprobante', label: 'Nº Boleta', disableSorting: true },
+  { id: 'comprobanteDate', label: 'Fecha', disableSorting: true },
   { id: 'importe', label: 'Importe', disableSorting: true },
   { id: 'observacion', label: 'Observación', disableSorting: true },
   { id: 'acciones', label: 'Acciones', disableSorting: true },
@@ -28,8 +29,9 @@ export default function ExpenseTable({ expenses, filterFn }) {
         <TableRow key={item.id}>
           <TableCell>{item.id.slice(5, 10)}</TableCell>
           <TableCell align="center">{item.proveedor.nombre}</TableCell>
-          <TableCell align="center">{item.concepto.nombre}</TableCell>
+          <TableCell align="center">{item.concepto.codigo}</TableCell>
           <TableCell align="center">{item.comprobante}</TableCell>
+          <TableCell align="center">{item.comprobanteDate}</TableCell>
           <TableCell align="center">${item.importe.toFixed(2)}</TableCell>
           <TableCell align="center">{item.observacion}</TableCell>
 

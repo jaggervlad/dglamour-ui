@@ -24,8 +24,10 @@ export default function ConceptList() {
       fn: (items) => {
         if (target.value == '') return items;
         else
-          return items.filter((x) =>
-            x.nombre.toLowerCase().includes(target.value)
+          return items.filter(
+            (x) =>
+              x.descripcion.toLowerCase().includes(target.value) ||
+              x.codigo.toString().toLowerCase().includes(target.value)
           );
       },
     });

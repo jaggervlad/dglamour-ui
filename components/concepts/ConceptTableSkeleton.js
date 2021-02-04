@@ -5,7 +5,8 @@ import { Paper, TableBody, TableCell, TableRow } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 
 const headCells = [
-  { id: 'nombre', label: 'Nombre' },
+  { id: 'codigo', label: 'Código' },
+  { id: 'descripcion', label: 'Descripción' },
   { id: 'acciones', label: 'Acciones' },
 ];
 export default function ConceptTableSkeleton() {
@@ -15,6 +16,9 @@ export default function ConceptTableSkeleton() {
     <TableBody>
       {headCells.map((item) => (
         <TableRow key={item.id}>
+          <TableCell>
+            <Skeleton animation="wave" />
+          </TableCell>
           <TableCell>
             <Skeleton animation="wave" />
           </TableCell>

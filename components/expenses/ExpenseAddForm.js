@@ -2,6 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import FormInput from '../forms/FormInput';
+import FormInputPicker from '../forms/FormInputPicker';
 import { FormProvider, useForm } from 'react-hook-form';
 import FormSelect from '../forms/FormSelect';
 import { useQuery, useMutation } from '@apollo/client';
@@ -40,6 +41,7 @@ export default function AddForm({ setOpen }) {
       concepto: data.concepto,
       observacion: data.observacion,
       comprobante: data.comprobante,
+      comprobanteDate: data.comprobanteDate,
       importe: Number(data.importe),
     };
 
@@ -68,7 +70,7 @@ export default function AddForm({ setOpen }) {
   }));
   const mapConcept = concepts?.allConcepts.map((item, i) => ({
     id: item.id,
-    label: item.nombre,
+    label: item.descripcion,
   }));
 
   return (
@@ -99,7 +101,7 @@ export default function AddForm({ setOpen }) {
             </Grid>
           )}
 
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <FormInput
               name="comprobante"
               label="Comprobante"
@@ -107,7 +109,15 @@ export default function AddForm({ setOpen }) {
             />
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={4}>
+            <FormInputPicker
+              name="comprobanteDate"
+              label="Fecha del Comprobante"
+              errorobj={errors}
+            />
+          </Grid>
+
+          <Grid item xs={4}>
             <FormInput
               type="number"
               name="importe"

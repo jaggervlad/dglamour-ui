@@ -18,7 +18,8 @@ export const UPDATE_CONCEPT = gql`
   mutation updateConcept($id: ID!, $input: ConceptInput!) {
     updateConcept(id: $id, input: $input) {
       id
-      nombre
+      codigo
+      descripcion
     }
   }
 `;
@@ -27,7 +28,8 @@ export const GET_CONCEPT = gql`
   query getConcept($id: ID!) {
     getConcept(id: $id) {
       id
-      nombre
+      codigo
+      descripcion
     }
   }
 `;
@@ -36,7 +38,8 @@ export const ALL_CONCEPTS = gql`
   query allConcepts {
     allConcepts {
       id
-      nombre
+      codigo
+      descripcion
     }
   }
 `;

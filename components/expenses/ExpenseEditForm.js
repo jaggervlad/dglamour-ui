@@ -9,6 +9,7 @@ import { useMutation } from '@apollo/client';
 import Swal from 'sweetalert2';
 import { UPDATE_EXPENSE } from '@/graphql/expenses';
 import { Form } from '../forms/Form';
+import FormInputPicker from '../forms/FormInputPicker';
 
 export default function ExpenseEditForm({
   id,
@@ -19,11 +20,19 @@ export default function ExpenseEditForm({
 }) {
   const [updateExpense] = useMutation(UPDATE_EXPENSE);
 
-  const { proveedor, concepto, comprobante, importe, observacion } = expense;
+  const {
+    proveedor,
+    concepto,
+    comprobante,
+    comprobanteDate,
+    importe,
+    observacion,
+  } = expense;
   const preload = {
     proveedor: proveedor.id,
     concepto: concepto.id,
     comprobante,
+    comprobanteDate,
     importe,
     observacion,
   };
@@ -40,6 +49,7 @@ export default function ExpenseEditForm({
       concepto: data.concepto,
       observacion: data.observacion,
       comprobante: data.comprobante,
+      comprobanteDate: data.comprobanteDate,
       importe: Number(data.importe),
     };
 
@@ -88,7 +98,7 @@ export default function ExpenseEditForm({
             </Grid>
           )}
 
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <FormInput
               name="comprobante"
               label="Comprobante"
@@ -96,7 +106,15 @@ export default function ExpenseEditForm({
             />
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={4}>
+            <FormInputPicker
+              name="comprobanteDate"
+              label="Fecha del Comprobante"
+              errorobj={errors}
+            />
+          </Grid>
+
+          <Grid item xs={4}>
             <FormInput
               type="number"
               name="importe"

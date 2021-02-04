@@ -24,9 +24,11 @@ export const UPDATE_EXPENSE = gql`
       }
       concepto {
         id
-        nombre
+        codigo
+        descripcion
       }
       comprobante
+      comprobanteDate
       importe
       observacion
     }
@@ -43,9 +45,11 @@ export const GET_EXPENSE = gql`
       }
       concepto {
         id
-        nombre
+        codigo
+        descripcion
       }
       comprobante
+      comprobanteDate
       importe
       observacion
     }
@@ -62,9 +66,11 @@ export const ALL_EXPENSE = gql`
       }
       concepto {
         id
-        nombre
+        codigo
+        descripcion
       }
       comprobante
+      comprobanteDate
       importe
       observacion
     }

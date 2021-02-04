@@ -24,7 +24,8 @@ export default function ConceptEditForm(props) {
 
   async function onSubmit(data) {
     const input = {
-      ...data,
+      codigo: +data.codigo,
+      descripcion: data.descripcion,
     };
     try {
       await updateConcept({
@@ -56,7 +57,15 @@ export default function ConceptEditForm(props) {
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <FormInput
-              name="nombre"
+              type="number"
+              name="codigo"
+              label="Código Gasto"
+              errorobj={errors}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormInput
+              name="descripcion"
               label="Nombre o Descripción"
               errorobj={errors}
             />
