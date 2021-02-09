@@ -34,7 +34,7 @@ export default function SummaryProduct({ product }) {
         <TextField
           type="number"
           placeholder="#"
-          onChange={(e) => setQtity(e.target.value)}
+          onChange={(e) => setQtity(e.currentTarget.value)}
           value={qtity}
           variant="outlined"
           margin="dense"
