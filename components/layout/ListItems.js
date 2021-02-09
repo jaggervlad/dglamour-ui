@@ -16,6 +16,7 @@ export function MaintListItems() {
       <ListCollpase
         title="CENTRO DATOS"
         render={<StorageIcon color="primary" />}
+        initialState={false}
       >
         <ListItemsDataCenter />
       </ListCollpase>

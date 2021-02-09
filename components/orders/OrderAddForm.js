@@ -74,11 +74,21 @@ export default function OrderAddForm(props) {
       });
 
       setOpen(false);
-      Swal.fire('Creado', 'Pedido creado correctamente', 'success');
+      Swal.fire({
+        title: 'Correcto',
+        text: 'Pedido creado correctamente!',
+        icon: 'success',
+        timer: 1500,
+      });
     } catch (error) {
       setOpen(false);
       const errorMsg = error.message.replace('Graphql error:', '');
-      Swal.fire('Error', errorMsg, 'error');
+      Swal.fire({
+        title: 'Error',
+        text: errorMsg,
+        icon: 'error',
+        timer: 3000,
+      });
     }
   }
 

@@ -4,6 +4,7 @@ import { ALL_CATEGORIES } from '@/graphql/categories';
 import { GET_PRODUCT } from '@/graphql/products';
 import { useQuery } from '@apollo/client';
 import Popup from '../customs/Popup';
+import { Alert } from '@material-ui/lab';
 
 export default function EditProduct(props) {
   const { id, open, setOpen } = props;
@@ -19,7 +20,12 @@ export default function EditProduct(props) {
   } = useQuery(GET_PRODUCT, { variables: { id } });
 
   if (loadingCategories || loadingProduct) return null;
-  if (errorCatergories || errorProduct) return <NotSignIn />;
+  if (errorCatergories || errorProduct)
+    return (
+      <Alert>
+        {errorCatergories ? errorCatergories.message : errorProduct.message}
+      </Alert>
+    );
   const categoriesMap = categorias?.obtenerCategorias.map((item, i) => ({
     id: item.id,
     label: item.nombre,

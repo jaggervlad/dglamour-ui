@@ -48,10 +48,20 @@ export default function OrderDeleteButton({ id }) {
             ],
           });
 
-          Swal.fire('Eliminado', data.eliminarPedido, 'success');
+          Swal.fire({
+            title: 'Correcto',
+            text: 'Pedido eliminado!',
+            icon: 'success',
+            timer: 1500,
+          });
         } catch (error) {
           const errorMessage = error.message.replace('Graphql error: ', '');
-          Swal.fire('Error', errorMessage, 'error');
+          Swal.fire({
+            title: 'Error',
+            text: errorMessage,
+            icon: 'error',
+            timer: 3000,
+          });
         }
       }
     });

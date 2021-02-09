@@ -60,7 +60,7 @@ export default function AddForm({ setOpen }) {
     } catch (error) {
       setOpen(false);
       const errorMsg = error.message.replace('Graphql error:', '');
-      Swal.fire({ title: 'Error', text: errorMsg, icon: 'error', timer: 1500 });
+      Swal.fire({ title: 'Error', text: errorMsg, icon: 'error', timer: 3000 });
     }
   }
 

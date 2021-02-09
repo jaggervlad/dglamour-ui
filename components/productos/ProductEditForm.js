@@ -56,11 +56,21 @@ export default function ProductEditForm(props) {
       });
 
       setOpen(false);
-      Swal.fire('Actulizado', 'Producto editado correctamente', 'success');
+      Swal.fire({
+        title: 'Correcto',
+        text: 'Editado!',
+        icon: 'success',
+        timer: 1500,
+      });
     } catch (error) {
       setOpen(false);
       const errorMsg = error.message.replace('Graphql error:', '');
-      Swal.fire('Error', errorMsg, 'error');
+      Swal.fire({
+        title: 'Error',
+        text: errorMsg,
+        icon: 'error',
+        timer: 3000,
+      });
     }
   }
 

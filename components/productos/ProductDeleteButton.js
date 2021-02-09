@@ -33,10 +33,20 @@ export default function ProductDeleteButton({ id }) {
       if (result.isConfirmed) {
         try {
           await eliminarProducto({ variables: { id } });
-          Swal.fire('Correcto', 'Se eliminó el producto', 'success');
+          Swal.fire({
+            title: 'Correcto',
+            text: 'Eliminado',
+            icon: 'success',
+            timer: 1500,
+          });
         } catch (error) {
           const errorMessage = error.message.replace('Graphql error: ', '');
-          Swal.fire('Error', errorMessage, 'error');
+          Swal.fire({
+            title: 'Error!',
+            text: errorMessage,
+            icon: 'error',
+            timer: 3000,
+          });
         }
       }
     });

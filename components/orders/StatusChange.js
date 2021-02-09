@@ -69,9 +69,15 @@ export default function StatusChange(props) {
       setStatus(data.actualizarPedido.estado);
     } catch (error) {
       const errorMessage = error.message.replace('Graphql error: ', '');
-      Swal.fire('Error', errorMessage, 'error');
+      Swal.fire({
+        title: 'Error',
+        text: errorMessage,
+        icon: 'error',
+        timer: 3000,
+      });
     }
   };
+
   return (
     <Select
       id="estado"
@@ -90,6 +96,12 @@ export default function StatusChange(props) {
       {status !== 'DESPACHADO' && (
         <MenuItem value="PAGADO">
           <em>PAGADO</em>
+        </MenuItem>
+      )}
+
+      {status !== 'PENDIENTE' && (
+        <MenuItem value="DESPACHADO">
+          <em>DESPACHADO</em>
         </MenuItem>
       )}
     </Select>

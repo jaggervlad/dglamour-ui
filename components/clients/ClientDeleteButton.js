@@ -34,10 +34,20 @@ export default function ClientDeleteButton({ id }) {
       if (result.isConfirmed) {
         try {
           await eliminarCliente({ variables: { id } });
-          Swal.fire('Correct', 'Cliente eliminado', 'success');
+          Swal.fire({
+            title: 'Correcto',
+            text: 'Eliminado!',
+            icon: 'success',
+            timer: 1500,
+          });
         } catch (error) {
           const errorMessage = error.message.replace('Graphql error: ', '');
-          Swal.fire('Error', errorMessage, 'error');
+          Swal.fire({
+            title: 'Error',
+            text: errorMessage,
+            icon: 'error',
+            timer: 1500,
+          });
         }
       }
     });

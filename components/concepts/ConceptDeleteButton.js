@@ -40,7 +40,7 @@ export default function ConceptDeleteButton({ id }) {
             timer: 1500,
           });
         } catch (error) {
-          const errorMessage = error.message.replace('Graphql error: ', '');
+          const errorMsg = error.message.replace('Graphql error: ', '');
           Swal.fire({
             title: 'Error',
             text: errorMsg,

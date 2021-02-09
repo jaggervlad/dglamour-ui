@@ -36,10 +36,20 @@ export default function CategorieDeleteButton({ id, children, ...props }) {
       if (result.isConfirmed) {
         try {
           await eliminarCategoria({ variables: { id } });
-          Swal.fire('Correcto', 'Categoria eliminada', 'success');
+          Swal.fire({
+            title: 'Correcto',
+            text: 'Eliminado',
+            icon: 'success',
+            timer: 1500,
+          });
         } catch (error) {
           const errorMessage = error.message.replace('Graphql error: ', '');
-          Swal.fire('Error', errorMessage, 'error');
+          Swal.fire({
+            title: 'Error',
+            text: errorMessage,
+            icon: 'error',
+            timer: 1500,
+          });
         }
       }
     });

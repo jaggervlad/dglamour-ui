@@ -23,7 +23,7 @@ import { Form } from '../forms/Form';
 
 export default function SignIn() {
   const router = useRouter();
-  const [autenticarUsuario] = useMutation(LOGIN);
+  const [autenticarUsuario, { client }] = useMutation(LOGIN);
   const methods = useForm({
     resolver: yupResolver(SigninSchema),
   });
@@ -42,6 +42,8 @@ export default function SignIn() {
           },
         },
       });
+
+      await client.resetStore();
 
       const { token } = data.autenticarUsuario;
       setAccessToken(token);

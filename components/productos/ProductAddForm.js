@@ -49,11 +49,21 @@ export default function AddForm({ setOpen }) {
       });
 
       setOpen(false);
-      Swal.fire('Creado', 'Se creó producto correctamente', 'success');
+      Swal.fire({
+        title: 'Correcto',
+        text: 'Producto creado!',
+        icon: 'success',
+        timer: 1500,
+      });
     } catch (error) {
       setOpen(false);
       const errorMsg = error.message.replace('Graphql error:', '');
-      Swal.fire('Error', errorMsg, 'error');
+      Swal.fire({
+        title: 'Error',
+        text: errorMsg,
+        icon: 'icon',
+        timer: 3000,
+      });
     }
   }
 

@@ -11,7 +11,6 @@ const headCells = [
   { id: 'comprobante', label: 'Nº Boleta', disableSorting: true },
   { id: 'comprobanteDate', label: 'Fecha', disableSorting: true },
   { id: 'importe', label: 'Importe', disableSorting: true },
-  { id: 'observacion', label: 'Observación', disableSorting: true },
   { id: 'acciones', label: 'Acciones', disableSorting: true },
 ];
 export default function ExpenseTable({ expenses, filterFn }) {
@@ -33,7 +32,6 @@ export default function ExpenseTable({ expenses, filterFn }) {
           <TableCell align="center">{item.comprobante}</TableCell>
           <TableCell align="center">{item.comprobanteDate}</TableCell>
           <TableCell align="center">${item.importe.toFixed(2)}</TableCell>
-          <TableCell align="center">{item.observacion}</TableCell>
 
           <TableCell align="center">
             <Grid container justify="center" spacing={2}>
