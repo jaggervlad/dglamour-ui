@@ -13,7 +13,7 @@ export const ClientSchema = Yup.object().shape({
     .typeError('Ingresé un valor válido')
     .integer()
     .positive('Digite un número de teléfono valido.')
-    .max(99999999, 'Ingresé un número de teléfono válido')
+    .max(999999999, 'Ingresé un número de teléfono válido')
     .required('El número de teléfono es obligatorio.'),
   direccion: Yup.string().required('La dirección es obligatoria.'),
   ciudad: Yup.string().required('La ciudad es obligatoria.'),
