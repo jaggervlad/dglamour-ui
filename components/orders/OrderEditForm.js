@@ -7,7 +7,6 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@apollo/client';
-import Swal from 'sweetalert2';
 import AddProducts from './AddProducts';
 import SummaryOrder from './SummaryOrder';
 import AddShippingCost from './AddShippingCost';
@@ -62,12 +61,11 @@ export default function OrderEditForm({ order, id, setOpen }) {
       });
 
       setOpen(false);
-      router.push('/orders');
-      Swal.fire('Actualizado', 'Cambios guardados correctamente', 'success');
+      fireEditModal();
     } catch (error) {
       setOpen(false);
       const errorMsg = error.message.replace('Graphql error:', '');
-      Swal.fire('Error', errorMsg, 'error');
+      fireErrorModal(errorMsg);
     }
   }
 

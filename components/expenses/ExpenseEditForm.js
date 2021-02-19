@@ -6,10 +6,10 @@ import { FormProvider, useForm } from 'react-hook-form';
 import FormSelect from '../forms/FormSelect';
 
 import { useMutation } from '@apollo/client';
-import Swal from 'sweetalert2';
 import { UPDATE_EXPENSE } from '@/graphql/expenses';
 import { Form } from '../forms/Form';
 import FormInputPicker from '../forms/FormInputPicker';
+import { fireEditModal } from '@/utils/fireModal';
 
 export default function ExpenseEditForm({
   id,
@@ -59,16 +59,11 @@ export default function ExpenseEditForm({
       });
 
       setOpen(false);
-      Swal.fire({
-        title: 'Actulizado',
-        text: 'Editado correctamente',
-        icon: 'success',
-        timer: 1500,
-      });
+      fireEditModal();
     } catch (error) {
       setOpen(false);
       const errorMsg = error.message.replace('Graphql error:', '');
-      Swal.fire({ title: 'Error', text: errorMsg, icon: 'error', timer: 1500 });
+      fireErrorModal(errorMsg);
     }
   }
 

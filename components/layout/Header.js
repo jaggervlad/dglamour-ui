@@ -1,3 +1,4 @@
+import { useTime } from '@/hooks/useTime';
 import { useStyles } from '@/styles/makeStyles/dashboard';
 import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core';
 import { Menu } from '@material-ui/icons';
@@ -7,6 +8,7 @@ import LogoutButton from '../customs/LogoutButton';
 
 export default function Header({ handleDrawerOpen, user, open }) {
   const classes = useStyles();
+  const now = useTime();
 
   return (
     <AppBar
@@ -31,6 +33,16 @@ export default function Header({ handleDrawerOpen, user, open }) {
           className={classes.title}
         >
           Bienvenido 😊 - @{user?.username}
+        </Typography>
+
+        <Typography
+          component="p"
+          variant="overline"
+          color="inherit"
+          noWrap
+          style={{ marginRight: '5px' }}
+        >
+          {now}
         </Typography>
 
         <LogoutButton />

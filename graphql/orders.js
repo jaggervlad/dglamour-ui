@@ -76,6 +76,7 @@ export const ALL_ORDERS = gql`
       total
       estado
       direccion
+      createdAt
     }
   }
 `;
@@ -109,6 +110,7 @@ export const GET_ORDER = gql`
       descripcion
       costEnv
       descuento
+      createdAt
     }
   }
 `;

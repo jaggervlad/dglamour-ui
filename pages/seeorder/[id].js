@@ -19,13 +19,13 @@ import RoomIcon from '@material-ui/icons/Room';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PrintIcon from '@material-ui/icons/Print';
-import EditIcon from '@material-ui/icons/Edit';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { handleShippingOrder } from '@/utils/events/pdf';
 import React from 'react';
-import Link from 'next/link';
 import { useDeleteOrderRedirect } from '@/hooks/useDeleteOrder';
 import OrderEditButton from '@/components/orders/OrderEditButton';
+import { formattedDate } from '@/utils/formatDate';
+import ScheduleIcon from '@material-ui/icons/Schedule';
 
 export default function seeorder() {
   const router = useRouter();
@@ -48,9 +48,11 @@ export default function seeorder() {
     vendedor,
     costEnv,
     descuento,
+    createdAt,
   } = data.obtenerPedido;
   const { mail, nombre, telefono } = cliente;
   const { nombre: vendedorNombre } = vendedor;
+  const formatDate = formattedDate(createdAt);
 
   return (
     <AuthLayout>
@@ -94,6 +96,11 @@ export default function seeorder() {
                   <Box display="flex" alignItems="center" m={3}>
                     <RoomIcon style={{ marginRight: '15px' }} />
                     <Typography variant="body1">{direccion}</Typography>
+                  </Box>
+
+                  <Box display="flex" alignItems="center" m={3}>
+                    <ScheduleIcon style={{ marginRight: '15px' }} />
+                    <Typography variant="body1">{formatDate}</Typography>
                   </Box>
 
                   {pago && (

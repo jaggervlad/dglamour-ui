@@ -27,7 +27,7 @@ export default function ProviderTable({ providers, filterFn }) {
         <TableRow key={item.id}>
           <TableCell>{item.ruc}</TableCell>
           <TableCell align="center">{item.nombre}</TableCell>
-          <TableCell align="center">0{item.telefono}</TableCell>
+          <TableCell align="center">{item.telefono}</TableCell>
           <TableCell align="center">{item.direccion}</TableCell>
           <TableCell align="center">{item.contacto}</TableCell>
 

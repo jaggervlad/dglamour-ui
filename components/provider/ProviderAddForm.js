@@ -4,14 +4,17 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@apollo/client';
-import Swal from 'sweetalert2';
 import { Grid } from '@material-ui/core';
 import Controls from '../controls/Controls';
 import { Form } from '../forms/Form';
 import { ALL_PROVIDER, NEW_PROVIDER } from '@/graphql/providers';
+import { providerSchema } from 'validationSchemas/provider';
+import { fireCreateModal, fireErrorModal } from '@/utils/fireModal';
 
 export default function ProviderAddForm({ setOpen }) {
-  const methods = useForm({});
+  const methods = useForm({
+    resolver: yupResolver(providerSchema),
+  });
   const [addProvider] = useMutation(NEW_PROVIDER, {
     update(cache, { data: addProvider }) {
       const { allProviders } = cache.readQuery({
@@ -30,11 +33,7 @@ export default function ProviderAddForm({ setOpen }) {
   const { isSubmitting } = formState;
 
   async function onSubmit(data) {
-    console.log(data);
-    const input = {
-      ...data,
-    };
-    console.log(input);
+    const input = { ...data };
 
     try {
       await addProvider({
@@ -42,21 +41,11 @@ export default function ProviderAddForm({ setOpen }) {
       });
 
       setOpen(false);
-      Swal.fire({
-        title: 'Creado',
-        text: 'Se creó  correctamente',
-        icon: 'success',
-        timer: 1500,
-      });
+      fireCreateModal();
     } catch (error) {
       setOpen(false);
       const errorMsg = error.message.replace('Graphql error:', '');
-      Swal.fire({
-        title: 'Error',
-        text: errorMsg,
-        icon: 'error',
-        timer: 1500,
-      });
+      fireErrorModal(errorMsg);
     }
   }
   return (

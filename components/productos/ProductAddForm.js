@@ -10,8 +10,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { ALL_CATEGORIES } from '@/graphql/categories';
 import { useQuery, useMutation } from '@apollo/client';
 import { ALL_PRODUCTS, NEW_PRODUCT } from '@/graphql/products';
-import Swal from 'sweetalert2';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { fireCreateModal, fireErrorModal } from '@/utils/fireModal';
 
 export default function AddForm({ setOpen }) {
   const classes = useFormStyles();
@@ -38,8 +38,6 @@ export default function AddForm({ setOpen }) {
 
   async function onSubmit(data) {
     const input = {
-      existencia: +data.existencia,
-      precio: +data.precio,
       ...data,
     };
 
@@ -49,21 +47,11 @@ export default function AddForm({ setOpen }) {
       });
 
       setOpen(false);
-      Swal.fire({
-        title: 'Correcto',
-        text: 'Producto creado!',
-        icon: 'success',
-        timer: 1500,
-      });
+      fireCreateModal();
     } catch (error) {
       setOpen(false);
       const errorMsg = error.message.replace('Graphql error:', '');
-      Swal.fire({
-        title: 'Error',
-        text: errorMsg,
-        icon: 'icon',
-        timer: 3000,
-      });
+      fireErrorModal(errorMsg);
     }
   }
 

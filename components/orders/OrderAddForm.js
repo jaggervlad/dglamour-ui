@@ -4,10 +4,8 @@ import Button from '@material-ui/core/Button';
 import { useFormStyles } from '../../styles/makeStyles/forms';
 import FormInput from '../forms/FormInput';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@apollo/client';
-import Swal from 'sweetalert2';
 import AddClient from './AddClient';
 import AddProducts from './AddProducts';
 import SummaryOrder from './SummaryOrder';
@@ -18,6 +16,7 @@ import { useOrder } from 'contexts/OrderProvider';
 import { ALL_ORDERS, NEW_ORDER } from '@/graphql/orders';
 import AddDiscount from './AddDiscount';
 import { Form } from '../forms/Form';
+import { fireCreateModal, fireErrorModal } from '@/utils/fireModal';
 
 export default function OrderAddForm(props) {
   const { setOpen } = props;
@@ -74,21 +73,11 @@ export default function OrderAddForm(props) {
       });
 
       setOpen(false);
-      Swal.fire({
-        title: 'Correcto',
-        text: 'Pedido creado correctamente!',
-        icon: 'success',
-        timer: 1500,
-      });
+      fireCreateModal();
     } catch (error) {
       setOpen(false);
       const errorMsg = error.message.replace('Graphql error:', '');
-      Swal.fire({
-        title: 'Error',
-        text: errorMsg,
-        icon: 'error',
-        timer: 3000,
-      });
+      fireErrorModal(errorMsg);
     }
   }
 

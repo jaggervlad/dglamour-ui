@@ -9,7 +9,7 @@ import { ProductSchema } from 'validationSchemas/products';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { UPDATE_PRODUCT } from '@/graphql/products';
 import { useMutation } from '@apollo/client';
-import Swal from 'sweetalert2';
+import { fireEditModal, fireErrorModal } from '@/utils/fireModal';
 
 export default function ProductEditForm(props) {
   const classes = useFormStyles();
@@ -44,33 +44,17 @@ export default function ProductEditForm(props) {
   const { isSubmitting } = formState;
 
   async function onSubmit(data) {
-    const input = {
-      existencia: +data.existencia,
-      precio: +data.precio,
-      ...data,
-    };
+    const input = { ...data };
 
     try {
       await actualizarProducto({
         variables: { id, input },
       });
-
-      setOpen(false);
-      Swal.fire({
-        title: 'Correcto',
-        text: 'Editado!',
-        icon: 'success',
-        timer: 1500,
-      });
+      fireEditModal();
     } catch (error) {
       setOpen(false);
       const errorMsg = error.message.replace('Graphql error:', '');
-      Swal.fire({
-        title: 'Error',
-        text: errorMsg,
-        icon: 'error',
-        timer: 3000,
-      });
+      fireErrorModal(errorMsg);
     }
   }
 

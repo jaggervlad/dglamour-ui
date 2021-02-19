@@ -1,19 +1,17 @@
 import React from 'react';
 import FormInput from '../forms/FormInput';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useFormStyles } from '../../styles/makeStyles/forms';
 
 import { ClientSchema } from 'validationSchemas/clients';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@apollo/client';
 import { ALL_CLIENTS, NEW_CLIENT } from '@/graphql/clients';
-import Swal from 'sweetalert2';
 import { Grid } from '@material-ui/core';
 import Controls from '../controls/Controls';
 import { Form } from '../forms/Form';
+import { fireCreateModal, fireErrorModal } from '@/utils/fireModal';
 
 export default function ClientAddForm({ setOpen }) {
-  const classes = useFormStyles();
   const methods = useForm({
     resolver: yupResolver(ClientSchema),
   });
@@ -35,27 +33,23 @@ export default function ClientAddForm({ setOpen }) {
   const { isSubmitting } = formState;
 
   async function onSubmit(data) {
-    const input = {
-      telefono: +data.telefono,
-      ...data,
-    };
-
+    const input = { ...data };
     try {
       await nuevoCliente({
         variables: { input },
       });
 
       setOpen(false);
-      Swal.fire('Creado', 'Se creó cliente correctamente', 'success');
+      fireCreateModal();
     } catch (error) {
       setOpen(false);
       const errorMsg = error.message.replace('Graphql error:', '');
-      Swal.fire('Error', errorMsg, 'error');
+      fireErrorModal(errorMsg);
     }
   }
   return (
     <FormProvider {...methods}>
-      <Form onSubmit={handleSubmit(onSubmit)} claseName={classes.form}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <FormInput

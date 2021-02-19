@@ -1,9 +1,9 @@
 import { ALL_CATEGORIES, NEW_CATEGORIE } from '@/graphql/categories';
+import { fireErrorModal } from '@/utils/fireModal';
 import { useMutation } from '@apollo/client';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Grid } from '@material-ui/core';
 import { FormProvider, useForm } from 'react-hook-form';
-import Swal from 'sweetalert2';
 import { CategorieSchema } from 'validationSchemas/categories';
 import Controls from '../controls/Controls';
 import { Form } from '../forms/Form';
@@ -42,7 +42,7 @@ export function CategorieAddForm(props) {
       setOpen(false);
     } catch (error) {
       const errorMsg = error.message.replace('Graphql error:', '');
-      Swal.fire('Error', errorMsg, 'error');
+      fireErrorModal(errorMsg);
     }
   }
   const { handleSubmit, formState, errors } = methods;

@@ -1,6 +1,5 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import Swal from 'sweetalert2';
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -8,6 +7,7 @@ import FormInput from '../forms/FormInput';
 import { ClientSchema } from 'validationSchemas/clients';
 import { Form } from '../forms/Form';
 import Controls from '../controls/Controls';
+import { fireCreateModal, fireErrorModal } from '@/utils/fireModal';
 
 export default function ClientEditForm(props) {
   const { id, client, setOpen, updateClient } = props;
@@ -23,7 +23,7 @@ export default function ClientEditForm(props) {
   const { isSubmitting } = formState;
 
   async function onSubmit(data) {
-    const input = { telefono: parseInt(data.telefono), ...data };
+    const input = { ...data };
 
     try {
       await updateClient({
@@ -31,11 +31,11 @@ export default function ClientEditForm(props) {
       });
 
       setOpen(false);
-      Swal.fire('Actualizado', 'Cliente editado correctamente', 'success');
+      fireCreateModal();
     } catch (error) {
       setOpen(false);
       const errorMsg = error.message.replace('Graphql error:', '');
-      Swal.fire('Error', errorMsg, 'error');
+      fireErrorModal(errorMsg);
     }
   }
 

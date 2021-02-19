@@ -1,6 +1,5 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import Swal from 'sweetalert2';
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -9,6 +8,8 @@ import { Form } from '../forms/Form';
 import Controls from '../controls/Controls';
 import { UPDATE_PROVIDER } from '@/graphql/providers';
 import { useMutation } from '@apollo/client';
+import { providerSchema } from 'validationSchemas/provider';
+import { fireEditModal, fireErrorModal } from '@/utils/fireModal';
 
 export default function ProviderEditForm({ setOpen, provider, id }) {
   const [updateProvider] = useMutation(UPDATE_PROVIDER);
@@ -17,6 +18,7 @@ export default function ProviderEditForm({ setOpen, provider, id }) {
   };
   const methods = useForm({
     defaultValues: preload,
+    resolver: yupResolver(providerSchema),
   });
 
   const { handleSubmit, formState, errors } = methods;
@@ -32,21 +34,11 @@ export default function ProviderEditForm({ setOpen, provider, id }) {
       });
 
       setOpen(false);
-      Swal.fire({
-        title: 'Actualizado',
-        text: 'Editado correctamente',
-        icon: 'success',
-        timer: 1500,
-      });
+      fireEditModal();
     } catch (error) {
       setOpen(false);
       const errorMsg = error.message.replace('Graphql error:', '');
-      Swal.fire({
-        title: 'Error',
-        text: errorMsg,
-        icon: 'error',
-        timer: 1500,
-      });
+      fireErrorModal(errorMsg);
     }
   }
 

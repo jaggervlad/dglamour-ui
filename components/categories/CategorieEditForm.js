@@ -9,6 +9,11 @@ import Swal from 'sweetalert2';
 
 import { Form } from '../forms/Form';
 import Controls from '../controls/Controls';
+import {
+  fireDeleteModal,
+  fireEditModal,
+  fireErrorModal,
+} from '@/utils/fireModal';
 
 export default function EditForm(props) {
   const { setOpen, id, actualizarCategoria, categoria } = props;
@@ -29,10 +34,11 @@ export default function EditForm(props) {
         variables: { id, input },
       });
 
+      fireEditModal();
       setOpen(false);
     } catch (error) {
       const errorMsg = error.message.replace('Graphql error:', '');
-      Swal.fire('Error', errorMsg, 'error');
+      fireErrorModal(errorMsg);
     }
   }
   const { handleSubmit, formState, errors } = methods;

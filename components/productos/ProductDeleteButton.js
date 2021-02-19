@@ -1,9 +1,13 @@
 import React from 'react';
 import { useMutation } from '@apollo/client';
 import { DELETE_PRODUCT, ALL_PRODUCTS } from '@/graphql/products';
-import Swal from 'sweetalert2';
 import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import {
+  fireDeleteModal,
+  fireErrorModal,
+  fireHandleDeleteModal,
+} from '@/utils/fireModal';
 
 export default function ProductDeleteButton({ id }) {
   const [eliminarProducto] = useMutation(DELETE_PRODUCT, {
@@ -20,33 +24,14 @@ export default function ProductDeleteButton({ id }) {
   });
 
   function handleDelete() {
-    Swal.fire({
-      title: 'Deseas eliminar este producto?',
-      text: 'Esta acción no se puede deshacer',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, Eliminar',
-      cancelButtonText: 'No, Cancelar',
-    }).then(async (result) => {
+    fireHandleDeleteModal().then(async (result) => {
       if (result.isConfirmed) {
         try {
           await eliminarProducto({ variables: { id } });
-          Swal.fire({
-            title: 'Correcto',
-            text: 'Eliminado',
-            icon: 'success',
-            timer: 1500,
-          });
+          fireDeleteModal();
         } catch (error) {
           const errorMessage = error.message.replace('Graphql error: ', '');
-          Swal.fire({
-            title: 'Error!',
-            text: errorMessage,
-            icon: 'error',
-            timer: 3000,
-          });
+          fireErrorModal(errorMessage);
         }
       }
     });
