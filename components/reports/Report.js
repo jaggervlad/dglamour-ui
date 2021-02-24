@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import AuthLayout from '../layout/AuthLayout';
 import { Title } from '../customs/Title';
@@ -25,12 +25,15 @@ export default function Reports() {
     setFilter(e.target.value);
   };
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    console.log(fromDate);
-    console.log(toDate);
-    console.log(filter);
-  };
+  const handleClick = useCallback(
+    (e) => {
+      e.preventDefault();
+      console.log(fromDate.toDateString());
+      console.log(toDate?.toDateString());
+      console.log(filter);
+    },
+    [fromDate, toDate, filter]
+  );
 
   return (
     <AuthLayout>

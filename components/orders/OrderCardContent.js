@@ -126,7 +126,7 @@ export default function OrderCartContent({ order, id }) {
           </Grid>
         </Grid>
       </CardContent>
-      <OrderCardActs id={id} />
+      <OrderCardActs id={id} status={estado} />
     </Card>
   );
 }

@@ -5,11 +5,11 @@ import OrderEditButton from './OrderEditButton';
 import OrderShippingButton from './OrderShippingButton';
 import { useDeleteOrderRedirect } from '@/hooks/useDeleteOrder';
 
-export default function OrderCardActs({ id }) {
+export default function OrderCardActs({ id, status }) {
   const { handleDelete } = useDeleteOrderRedirect(id);
   return (
     <CardActions>
-      {estado === 'PENDIENTE' && (
+      {status === 'PENDIENTE' && (
         <>
           <OrderDeleteButtonRedirect handleClick={handleDelete} />
           <OrderEditButton id={id} />
