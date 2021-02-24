@@ -5,7 +5,7 @@ export function formattedDate(date) {
     zone: 'America/Lima',
   });
 
-  return formatted.toFormat('yyyy LLL dd hh:mm:ss', {
+  return formatted.toFormat('yyyy LLL dd', {
     month: 'long',
     day: 'numeric',
     timeZone: 'America/Lima',

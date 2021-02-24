@@ -1,3 +1,5 @@
+import Swal from 'sweetalert2';
+
 export const handleShippingOrder = (id, e) => {
   e.preventDefault();
   fetch(`https://blooming-citadel-99802.herokuapp.com/pedidos/envios/${id}`, {

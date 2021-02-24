@@ -58,3 +58,16 @@ export default function OrderDeleteButton({ id }) {
     </Button>
   );
 }
+
+export function OrderDeleteButtonRedirect({ handleClick }) {
+  return (
+    <Button
+      size="small"
+      color="secondary"
+      variant="contained"
+      onClick={handleClick}
+    >
+      <DeleteIcon />
+    </Button>
+  );
+}

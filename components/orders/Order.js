@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useEffect } from 'react';
 import OrderDeleButton from './OrderDeleteButton';
 import OrderAddPaidButton from './OrderAddPaidButton';
 import OrderSeeButton from './OrderSeeButton';
@@ -6,10 +6,12 @@ import OrderPdfButton from './OrderPdfButton';
 import StatusChange from './StatusChange';
 import { useStatusChange } from '@/hooks/useStatusChange';
 import { TableCell } from '@material-ui/core';
-export default function Order({ order }) {
+
+const Order = memo(({ order }) => {
   const products = order.pedido.map(({ __typename, ...product }) => product);
   const { id, total, cliente, estado, direccion } = order;
   const { status, setStatus } = useStatusChange(estado);
+
   return (
     <>
       <TableCell>{id.slice(5, 10)}</TableCell>
@@ -44,4 +46,5 @@ export default function Order({ order }) {
       </TableCell>
     </>
   );
-}
+});
+export default Order;

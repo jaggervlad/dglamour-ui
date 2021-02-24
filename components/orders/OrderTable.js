@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useEffect } from 'react';
 import useTable from '../table/useTable';
 import { Paper, TableBody, TableRow } from '@material-ui/core';
 import Order from './Order';
@@ -14,7 +14,8 @@ const headCells = [
   { id: 'ver', label: 'Ver', disableSorting: true },
   { id: 'eliminar', label: 'Eliminar', disableSorting: true },
 ];
-export default function OrderTable({ orders, filterFn }) {
+
+const OrderTable = memo(({ orders, filterFn }) => {
   const {
     TblContainer,
     TblHead,
@@ -43,4 +44,6 @@ export default function OrderTable({ orders, filterFn }) {
       <TblPagination />
     </Paper>
   );
-}
+});
+
+export default OrderTable;
