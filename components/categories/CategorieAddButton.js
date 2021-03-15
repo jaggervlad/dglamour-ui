@@ -5,7 +5,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Popup from '../customs/Popup';
 import { CategorieAddForm } from './CategorieAddForm';
 
-export default function CategorieAddButton() {
+export default function CategorieAddButton({ iconRender }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -16,7 +16,8 @@ export default function CategorieAddButton() {
         style={{ marginRight: '5px' }}
         onClick={() => setOpen(true)}
       >
-        <AddIcon />
+        {iconRender ? iconRender : <AddIcon />}
+
       </Button>
       <Popup title="Crear Categoria" openPopup={open} setOpenPopup={setOpen}>
         <CategorieAddForm setOpen={setOpen} />

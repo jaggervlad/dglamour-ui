@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
 import { useQuery } from '@apollo/client';
+import CategoryIcon from '@material-ui/icons/Category';
 
 import AuthLayout from '../layout/AuthLayout';
 import Search from '../customs/Search';
@@ -11,6 +11,7 @@ import ProductTable from './ProductTable';
 import ProductTableSkeleton from './ProductTableSkeleton';
 import { Title } from '../customs/Title';
 import { ALL_PRODUCTS } from '@/graphql/products';
+import CategorieAddButton from '../categories/CategorieAddButton';
 
 export default function ListProducts() {
   const { data, loading, error } = useQuery(ALL_PRODUCTS);
@@ -47,6 +48,8 @@ export default function ListProducts() {
         >
           <Grid item>
             <ProductAddButton />
+
+            < CategorieAddButton iconRender={<CategoryIcon />} />
           </Grid>
 
           <Grid item>

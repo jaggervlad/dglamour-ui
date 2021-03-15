@@ -4,6 +4,7 @@ import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import Alert from '@material-ui/lab/Alert';
 import { useQuery } from '@apollo/client';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 import { Title } from '../customs/Title';
 import { ALL_ORDERS } from '@/graphql/orders';
@@ -13,6 +14,7 @@ import OrderAddButton from './OrderAddButton';
 import OrderTable from './OrderTable';
 import ButtonIcon from '../controls/ButtonIcon';
 import OrderTableSkeleton from './OrderTableSkeleton';
+import ClientAddButton from '../clients/ClientAddButton';
 
 export default function ListOrder() {
   const { data, loading, error } = useQuery(ALL_ORDERS);
@@ -51,6 +53,8 @@ export default function ListOrder() {
         >
           <Grid item>
             <OrderAddButton />
+
+            <ClientAddButton iconRender={<PersonAddIcon />} />
 
             <ButtonIcon redirect="orderspaid">
               <MonetizationOnIcon />
