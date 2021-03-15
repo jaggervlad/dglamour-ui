@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 export const ClientSchema = Yup.object().shape({
   cedula: Yup.string()
     .typeError('Ingresé un valor válido')
-    .matches(/^[0-9]{10}$/, 'Ingresé un numero de cédula válido')
+    .matches(/^[0-9]{8,10}$/, 'Ingresé un numero de cédula válido')
     .required('La cédula es obligatorio.'),
   nombre: Yup.string().required('El nombre es obligatorio.'),
   mail: Yup.string()
