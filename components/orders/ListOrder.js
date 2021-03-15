@@ -32,8 +32,8 @@ export default function ListOrder() {
         else
           return items.filter(
             (x) =>
-              x.cliente?.nombre?.toLowerCase().includes(target.value) ||
-              x.id.toLowerCase().includes(target.value)
+              x.cliente?.nombre?.toLowerCase().includes(target.value.toLowerCase()) ||
+              x.id.toLowerCase().includes(target.value.toLowerCase())
           );
       },
     });
