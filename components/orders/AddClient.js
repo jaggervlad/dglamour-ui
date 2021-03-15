@@ -17,8 +17,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AddClient() {
-  const [client, setClient] = useState({});
+export default function AddClient({ defaultValue }) {
+  const [client, setClient] = useState(defaultValue ? defaultValue : {});
   const { addClient } = useOrder();
   const classes = useStyles();
   const { data, loading, error } = useQuery(ALL_CLIENTS);
@@ -42,6 +42,7 @@ export default function AddClient() {
         <Select
           className={classes.root}
           options={data.obtenerClientes}
+          value={client}
           onChange={(opc) => selectClient(opc)}
           getOptionValue={(opc) => opc.id}
           getOptionLabel={(opc) => opc.nombre}

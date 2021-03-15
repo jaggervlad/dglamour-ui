@@ -90,14 +90,13 @@ export const GET_ORDER = gql`
         cantidad
         nombre
         precio
-        existencia
-        marca
       }
       cliente {
         id
         nombre
         mail
         telefono
+        direccion
       }
       vendedor {
         id

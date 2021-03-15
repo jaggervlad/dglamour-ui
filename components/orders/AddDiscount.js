@@ -2,8 +2,8 @@ import { Grid, TextField, Typography } from '@material-ui/core';
 import { useOrder } from 'contexts/OrderProvider';
 import React, { useState, useEffect } from 'react';
 
-export default function AddDiscount() {
-  const [discount, setDiscount] = useState(0);
+export default function AddDiscount({ defaultValue }) {
+  const [discount, setDiscount] = useState(defaultValue ? defaultValue : 0);
   const { addDiscount, updateTotal } = useOrder();
 
   useEffect(() => {

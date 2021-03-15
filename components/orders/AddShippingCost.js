@@ -2,8 +2,8 @@ import { Grid, TextField, Typography } from '@material-ui/core';
 import { useOrder } from 'contexts/OrderProvider';
 import React, { useState, useEffect } from 'react';
 
-export default function AddShippingCost() {
-  const [costEnv, setCostEnv] = useState(0);
+export default function AddShippingCost({ defaultValue }) {
+  const [costEnv, setCostEnv] = useState(defaultValue ? defaultValue : 0);
   const { addShippingCost, updateTotal } = useOrder();
 
   useEffect(() => {
