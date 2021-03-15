@@ -6,12 +6,12 @@ export default function Total() {
   const { total } = useOrder();
 
   return (
-    <Grid item container xs={12}>
-      <Grid container spacing={2} alignItems="center">
+    <Grid item container xs={6} direction="column">
+      <Grid container alignItems="center" >
         <Grid item>
           <Typography variant="h6">Total a pagar: </Typography>
         </Grid>
-        <Grid item>
+        <Grid item style={{ marginLeft: "5px" }}>
           <Typography variant="body2" style={{ marginTop: '7px' }}>
             $ {total}
           </Typography>

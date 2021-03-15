@@ -16,9 +16,7 @@ export default function AddDiscount() {
   }
 
   return (
-    <Grid item xs={6}>
-      <Typography variant="h6">Descuento</Typography>
-
+    <Grid item xs={3}>
       <TextField
         type="number"
         value={discount}

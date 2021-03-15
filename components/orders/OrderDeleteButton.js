@@ -31,21 +31,24 @@ export default function OrderDeleteButton({ id }) {
   function handleDelete(e) {
     e.preventDefault();
     fireHandleDeleteModal().then(async (result) => {
-      try {
-        await eliminarPedido({
-          variables: {
-            id,
-          },
-          refetchQueries: [
-            { query: ORDERS_DISPATCHED },
-            { query: ORDERS_PAID },
-          ],
-        });
-        fireDeleteModal();
-      } catch (error) {
-        const message = error.message.replace('Graphql error: ', '');
-        fireErrorModal(message);
+      if (result.isConfirmed) {
+        try {
+          await eliminarPedido({
+            variables: {
+              id,
+            },
+            refetchQueries: [
+              { query: ORDERS_DISPATCHED },
+              { query: ORDERS_PAID },
+            ],
+          });
+          fireDeleteModal();
+        } catch (error) {
+          const message = error.message.replace('Graphql error: ', '');
+          fireErrorModal(message);
+        }
       }
+
     });
   }
   return (

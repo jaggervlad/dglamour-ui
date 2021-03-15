@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 
 export const OrderSchema = Yup.object().shape({
-  direccion: Yup.string().required('Este campo es obligatorio'),
+  address: Yup.string()
 });
 
 export const PaySchema = Yup.object().shape({

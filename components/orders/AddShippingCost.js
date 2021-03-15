@@ -16,9 +16,7 @@ export default function AddShippingCost() {
   }
 
   return (
-    <Grid item xs={6}>
-      <Typography variant="h6">Añadir Costo Envio</Typography>
-
+    <Grid item xs={3}>
       <TextField
         type="number"
         value={costEnv}

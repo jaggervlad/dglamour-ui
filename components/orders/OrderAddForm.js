@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import { useFormStyles } from '../../styles/makeStyles/forms';
 import FormInput from '../forms/FormInput';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -17,9 +16,11 @@ import { ALL_ORDERS, NEW_ORDER } from '@/graphql/orders';
 import AddDiscount from './AddDiscount';
 import { Form } from '../forms/Form';
 import { fireCreateModal, fireErrorModal } from '@/utils/fireModal';
+import { Typography, Button } from '@material-ui/core';
 
 export default function OrderAddForm(props) {
   const { setOpen } = props;
+  const [change, setChange] = useState(false)
   const classes = useFormStyles();
   const [nuevoPedido] = useMutation(NEW_ORDER, {
     update(cache, { data: nuevoPedido }) {
@@ -35,14 +36,14 @@ export default function OrderAddForm(props) {
   });
 
   const { client, products, total, cost, discount } = useOrder();
+  const { id, direccion } = client;
+
   const methods = useForm({
     resolver: yupResolver(OrderSchema),
   });
-
   const { handleSubmit, formState, errors } = methods;
   const { isSubmitting } = formState;
 
-  const { id } = client;
   const order = products.map(
     ({
       __typename,
@@ -62,7 +63,7 @@ export default function OrderAddForm(props) {
       pedido: order,
       cliente: id,
       total,
-      direccion: data.direccion,
+      direccion: change ? data.address : direccion,
       costEnv: cost,
       descuento: discount,
     };
@@ -96,19 +97,37 @@ export default function OrderAddForm(props) {
           <AddClient />
           <AddProducts />
           <SummaryOrder />
-          <AddShippingCost />
-          <AddDiscount />
-          <Total />
+          <Grid container item spacing={2} alignItems="center">
+            <AddShippingCost />
+            <AddDiscount />
+            <Total />
+          </Grid>
 
-          <Grid item xs={12}>
+          {direccion && (
+            <Grid item container alignItems="center" xs={12}>
+              <Typography variant="h6" style={{}}>Dirección de Envió:</Typography>
+              <div style={{ marginTop: '5px', marginLeft: "15px" }}>
+                {direccion ? direccion : ''}
+              </div>
+              <Button color="primary" style={{ marginTop: "5px", marginLeft: "8px", cursor: 'poninter' }}
+                onClick={() => setChange(!change)}
+              >Cambiar</Button>
+
+            </Grid>
+          )}
+
+
+          {change ? <Grid item xs={12}>
             <FormInput
-              name="direccion"
+              name="address"
               label="Direccion de envio"
               multiline
               rowsMax={4}
               errorobj={errors}
             />
-          </Grid>
+          </Grid> : ''}
+
+
         </Grid>
 
         <Button
