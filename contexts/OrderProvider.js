@@ -5,6 +5,7 @@ import {
   COUNT_PRODUCTS,
   UPDATE_TOTAL,
   ADD_DISCOUNT,
+  ADD_ADITIONAL
 } from '@/types/orders';
 import OrderReducer from 'reducers/OrderReducer';
 import { ADD_COST_SHIPPING } from 'types/orders';
@@ -15,6 +16,7 @@ export const initialState = {
   total: 0,
   costEnv: 0,
   discount: 0,
+  aditional: 0
 };
 
 const OrderContext = createContext();
@@ -75,6 +77,13 @@ export function OrderProvider({ children }) {
     });
   };
 
+  const addAditional = adi => {
+    dispatch({
+      type: ADD_ADITIONAL,
+      payload: adi
+    })
+  }
+
   const updateTotal = () => {
     dispatch({
       type: UPDATE_TOTAL,
@@ -87,10 +96,12 @@ export function OrderProvider({ children }) {
     total: Number(state.total.toFixed(2)),
     cost: Number(state.costEnv),
     discount: Number(state.discount),
+    aditional: Number(state.aditional),
     addShippingCost,
     addClient,
     addDiscount,
     addProduct,
+    addAditional,
     countProducts,
     updateTotal,
   };

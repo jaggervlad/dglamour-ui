@@ -109,6 +109,7 @@ export const GET_ORDER = gql`
       descripcion
       costEnv
       descuento
+      adicional
       createdAt
     }
   }

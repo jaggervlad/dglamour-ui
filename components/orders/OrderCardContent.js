@@ -22,6 +22,7 @@ export default function OrderCartContent({ order, id }) {
     vendedor,
     costEnv,
     descuento,
+    adicional,
     createdAt,
   } = order;
   const { mail, nombre, telefono } = cliente;
@@ -106,6 +107,14 @@ export default function OrderCartContent({ order, id }) {
             {descuento ? (
               <Typography variant="body1">
                 Descuento <span>$ {descuento}</span>
+              </Typography>
+            ) : (
+              ''
+            )}
+
+            {adicional ? (
+              <Typography variant="body1">
+                Adicional <span>$ {adicional}</span>
               </Typography>
             ) : (
               ''

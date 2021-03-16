@@ -17,6 +17,7 @@ import AddDiscount from './AddDiscount';
 import { Form } from '../forms/Form';
 import { fireCreateModal, fireErrorModal } from '@/utils/fireModal';
 import { Typography, Button } from '@material-ui/core';
+import AddAditional from './AddAditional';
 
 export default function OrderAddForm(props) {
   const { setOpen } = props;
@@ -35,7 +36,7 @@ export default function OrderAddForm(props) {
     },
   });
 
-  const { client, products, total, cost, discount } = useOrder();
+  const { client, products, total, cost, discount, aditional } = useOrder();
   const { id, direccion } = client;
 
   const methods = useForm({
@@ -66,6 +67,7 @@ export default function OrderAddForm(props) {
       direccion: change ? data.address : direccion,
       costEnv: cost,
       descuento: discount,
+      adicional: aditional
     };
 
     try {
@@ -100,6 +102,7 @@ export default function OrderAddForm(props) {
           <Grid container item spacing={2} alignItems="center">
             <AddShippingCost />
             <AddDiscount />
+            <AddAditional />
             <Total />
           </Grid>
 

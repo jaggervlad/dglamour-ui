@@ -4,6 +4,7 @@ import {
   COUNT_PRODUCTS,
   UPDATE_TOTAL,
   ADD_DISCOUNT,
+  ADD_ADITIONAL
 } from '@/types/orders';
 import { ADD_COST_SHIPPING } from 'types/orders';
 
@@ -43,6 +44,12 @@ export default function OrderReducer(state, action) {
         discount: action.payload,
       };
 
+    case ADD_ADITIONAL:
+      return {
+        ...state,
+        aditional: action.payload
+      };
+
     case UPDATE_TOTAL:
       let reduceTotal = state.productos.reduce((newTotal, product) => {
         newTotal += product.precio * product.cantidad;
@@ -51,6 +58,10 @@ export default function OrderReducer(state, action) {
 
       if (state.costEnv > 0) {
         reduceTotal += state.costEnv;
+      }
+
+      if (state.aditional > 0) {
+        reduceTotal += state.aditional;
       }
 
       if (state.discount > 0) {

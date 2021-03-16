@@ -16,7 +16,7 @@ export default function AddDiscount({ defaultValue }) {
   }
 
   return (
-    <Grid item xs={3}>
+    <Grid item xs={2}>
       <TextField
         type="number"
         value={discount}
