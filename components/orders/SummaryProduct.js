@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 
 export default function SummaryProduct({ product }) {
   const { countProducts, updateTotal } = useOrder();
-  const [qtity, setQtity] = useState(0);
+  const { cantidad } = product
+  const [qtity, setQtity] = useState(cantidad ? cantidad : 0);
 
   useEffect(() => {
     updateQtity();
@@ -17,7 +18,6 @@ export default function SummaryProduct({ product }) {
   }
 
   const { nombre, precio } = product;
-
   return (
     <Box
       display="flex"

@@ -35,7 +35,6 @@ export default function AddForm({ setOpen }) {
   const { isSubmitting } = formState;
 
   async function onSubmit(data) {
-    // console.log(data.importe);
     const input = {
       proveedor: data.proveedor,
       concepto: data.concepto,

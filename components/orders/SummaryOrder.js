@@ -4,8 +4,8 @@ import { useOrder } from 'contexts/OrderProvider';
 import React from 'react';
 import SummaryProduct from './SummaryProduct';
 
-export default function SummaryOrder(defaultValue = []) {
-  const { products = defaultValue && defaultValue } = useOrder();
+export default function SummaryOrder({ defaultValue }) {
+  const { products = defaultValue ? defaultValue : [] } = useOrder();
   return (
     <Grid item xs={12}>
       <Typography variant="h6">Añadir Cantidad</Typography>

@@ -25,7 +25,6 @@ export default function ProviderEditForm({ setOpen, provider, id }) {
   const { isSubmitting } = formState;
 
   async function onSubmit(data) {
-    console.log(data);
     const input = { ...data };
 
     try {

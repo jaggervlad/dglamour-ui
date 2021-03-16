@@ -24,15 +24,15 @@ export default function OrderEditForm({ order, id, setOpen }) {
   const classes = useFormStyles();
   const [actualizarPedido] = useMutation(UPDATE_ORDER);
 
-  const { products, total, cost, client } = useOrder();
+  const { products, total, cost, client, discount } = useOrder();
   const methods = useForm({
-    defaultValues: { direccion: order.direccion },
+    defaultValues: { address: order.direccion },
     resolver: yupResolver(OrderSchema),
   });
 
   const { handleSubmit, formState, errors } = methods;
   const { isSubmitting } = formState;
-
+  const { mail, telefono, __typename, ...orderClient } = order.cliente
   const pedido = products.map(
     ({
       __typename,
@@ -50,8 +50,9 @@ export default function OrderEditForm({ order, id, setOpen }) {
     const input = {
       pedido,
       total,
-      direccion: data.direccion,
+      direccion: data.address,
       costEnv: cost,
+      descuento: discount,
       cliente: client.id
     };
 
@@ -74,8 +75,11 @@ export default function OrderEditForm({ order, id, setOpen }) {
     }
   }
 
-  const { mail, telefono, __typename, ...orderClient } = order.cliente
-  // const defaultProducts = order.pedido.map(({ __typename, ...product }) => ({ ...product }))
+  console.log(products)
+  console.log(total)
+  console.log(cost)
+  console.log(client)
+  console.log(discount)
 
   return (
     <FormProvider {...methods}>
@@ -83,8 +87,8 @@ export default function OrderEditForm({ order, id, setOpen }) {
         <Grid container spacing={1}>
 
           <AddClient defaultValue={orderClient} />
-          <AddProducts />
-          <SummaryOrder />
+          <AddProducts defaultValue={order.pedido} />
+          <SummaryOrder defaultValue={order.pedido} />
           <Grid container item spacing={2} alignItems="center">
             <AddShippingCost defaultValue={order.costEnv} />
             <AddDiscount defaultValue={order.descuento} />
@@ -93,7 +97,7 @@ export default function OrderEditForm({ order, id, setOpen }) {
 
           <Grid item xs={12}>
             <FormInput
-              name="direccion"
+              name="address"
               label="Direccion de envio"
               multiline
               rowsMax={4}

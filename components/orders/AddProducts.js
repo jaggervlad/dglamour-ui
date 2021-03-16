@@ -16,9 +16,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
 }));
-export default function AddProducts() {
+export default function AddProducts({ defaultValue }) {
   const classes = useStyles();
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(defaultValue ? defaultValue : []);
   const { addProduct, updateTotal } = useOrder();
   const { data, loading, error } = useQuery(ALL_PRODUCTS);
 
@@ -48,6 +48,7 @@ export default function AddProducts() {
           className={classes.root}
           isMulti={true}
           options={data.allProducts}
+          value={products}
           onChange={(opc) => selectProducts(opc)}
           getOptionValue={(opc) => opc.id}
           getOptionLabel={(opc) =>
