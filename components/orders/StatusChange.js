@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { ALL_PRODUCTS } from '@/graphql/products';
 import {
   ALL_ORDERS,
+  GET_ORDER,
   ORDERS_DISPATCHED,
   ORDERS_PAID,
   UPDATE_ORDER,
@@ -68,7 +69,7 @@ export default function StatusChange(props) {
         refetchQueries: [
           { query: ALL_ORDERS },
           { query: ORDERS_DISPATCHED },
-          { query: ORDERS_PAID }
+          { query: ORDERS_PAID },
         ]
       });
       setStatus(data.actualizarPedido.estado);
