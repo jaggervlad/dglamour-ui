@@ -1,7 +1,9 @@
+import { USER_PRODUCTIVITY } from '@/graphql/reports';
 import { useTime } from '@/hooks/useTime';
 import { useStyles } from '@/styles/makeStyles/dashboard';
+import { useQuery } from '@apollo/client';
 import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core';
-import { Menu } from '@material-ui/icons';
+import { CallMerge, Menu } from '@material-ui/icons';
 import clsx from 'clsx';
 import React from 'react';
 import LogoutButton from '../customs/LogoutButton';
@@ -9,6 +11,11 @@ import LogoutButton from '../customs/LogoutButton';
 export default function Header({ handleDrawerOpen, user, open }) {
   const classes = useStyles();
   const now = useTime();
+  const { data, loading, error } = useQuery(USER_PRODUCTIVITY)
+
+  if (loading || error) return null
+
+  const { count, total } = data?.productivityUser
 
   return (
     <AppBar
@@ -32,7 +39,17 @@ export default function Header({ handleDrawerOpen, user, open }) {
           noWrap
           className={classes.title}
         >
-          Bienvenido 😊 - @{user?.username}
+          @{user?.username}
+        </Typography>
+        <Typography
+          component="p"
+          variant="body1"
+          color="inherit"
+          noWrap
+          align="center"
+          style={{ marginRight: "25px" }}
+        >
+          Prod: #{count && count}/${total && total}
         </Typography>
 
         <Typography

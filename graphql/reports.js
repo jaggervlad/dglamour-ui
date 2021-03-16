@@ -22,3 +22,13 @@ export const BEST_CLIENTS = gql`
     }
   }
 `;
+
+
+export const USER_PRODUCTIVITY = gql`
+  query productivityUser{
+  productivityUser{
+    total
+    count
+  }
+}
+`;

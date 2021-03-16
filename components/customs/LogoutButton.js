@@ -22,10 +22,9 @@ export default function LogoutButton() {
   return (
     <Controls.Button
       color="secondary"
-      text="Cerrar Sesion"
       size="small"
       onClick={handleLogout}
-      startIcon={<ExitToApp />}
+      icon={<ExitToApp />}
     />
   );
 }
