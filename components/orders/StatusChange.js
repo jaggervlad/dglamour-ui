@@ -65,6 +65,11 @@ export default function StatusChange(props) {
             pedido: products,
           },
         },
+        refetchQueries: [
+          { query: ALL_ORDERS },
+          { query: ORDERS_DISPATCHED },
+          { query: ORDERS_PAID }
+        ]
       });
       setStatus(data.actualizarPedido.estado);
     } catch (error) {
